@@ -118,18 +118,23 @@
                                     <li><a href="#line1_4">What software/drivers do I need?</a></li>
                                     <li><a href="#line1_5">How do I install SurgiSim?</a></li>
                                     <li><a href="#line1_6">How do I get started?</a></li>
+                                    <li><a href="#line1_7">How do I load specimens?</a></li>
+                                    <li><a href="#line1_8">How do I interact with the specimens?</a></li>
+                                    <li><a href="#line1_9">Which file types can I upload?</a></li>
+
                                 </li></ul>
                             <li><a href="#line2">Getting Started</a></li>
                             <li><a href="#line3">Haptic Device Setup</a></li>
-                            <li><a href="#line4">Monitor-based (2D) Mode</a></li>
-                            <li><a href="#line5">2D Workspace</a></li>
+                            <li><a href="#line4">Monitor Mode / two-dimensional (2D)</a></li>
                             <li><a href="#line6">Downloading Specimens</a></li>
                             <li><a href="#line7">Loading Specimens</a></li>
                             <li><a href="#line8">Saving Dissections</a></li>
                             <li><a href="#line9">Evaluating Dissections</a></li>
-                            <li><a href="#line10">Virtual Reality (VR) Mode</a></li>
-                            <li><a href="#line11">Using the VR Microscope</a></li>
-                            <li><a href="#line12">Drilling in VR</a></li>
+                            <li><a href="#line10">Virtual Reality (VR) mode</a>
+                            	<ul class="nav">
+                                    <li><a href="#line10_1">Using the VR Microscope</a></li>
+                                    <li><a href="#line10_2">Drilling in VR</a></li>
+                                </li></ul>
                             <li><a href="#line13">TroubleShooting (Commom problems/erros)</a></li>
 
                         </ul>
@@ -150,15 +155,20 @@
                                             <ul>
                                                 <li><strong>Software Version: </strong>SurgiSim beta v 1.0</li>
                                                 <li><strong>University of Calgary, Western University and Stanford University</strong>
+                                                <li><strong>Last Update: </strong>June 1st 2021</li>
+
                                             </ul>
                                         </div>
 
                                         <hr>
                                         <div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                                <strong>Lorem ipsum!</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                            </p>
+                                                <strong>Welcome to SurgiSim!</strong>
+                                                <br> <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+                                                
+                                                <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
                                         </div>
                                     </div>
 
@@ -183,7 +193,9 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h4 id="line1_1">What is SurgiSim?</h4>
-                                <p>Lorem the It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. long established fact that a reader will English.</p>
+                                <p>SurgiSim is a virtual reality (VR) surgical simulator designed as a collaborative effort between the University of Calgary, Stanford University and Western University. The platform supports the exploration and manipulation of patient-specific anatomy derived from clinical imaging studies. SurgiSim allows skull base surgeons and trainees alike to rehearse complex procedures using high-fidelity stereoscopic graphics and haptic feedback.</p>
+
+								<p>With SurgiSim, a user creates surgical scenes in which anatomic structures are derived from segmented clinical PACS systems. Volumetric structures may be represented with predefined or customized material properties and viewed with a variety of stereoscopic displays using real-time volumetric rendering. Virtual dissections can be performed with the support of high-fidelity haptic feedback from a variety of supported hardware. The dissections can be compared with intraoperative video for retrospective analysis.</p>
                             </div>
                             <!-- end col -->
                         </div>
@@ -191,7 +203,21 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h4 id="line1_2">What hardware do I need?</h4>
-                                <p>Lorem the It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. long established fact that a reader will English.</p>
+                                <p>SurgiSim is designed to run on standard commercial-grade hardware and software.</p>
+
+                                <p><b>Hardware: </b></p>
+                                <ul class="b">
+								  <li> Processor: intel(r) Core™ i7 6700k or better
+								  <li> RAM: 16GB</li>
+								  <li> GPU: NVIDIA GeForce RTX 3070</li>
+								  <li> Displays: Oculus Rift S or Oculus Quest 2</li>
+								  <li> Haptic device: Geomagic Touch Haptic (20% Education discount available at <a href="https://www.rapid3d.ca/" target="_blank">www.rapid3d.ca</a>) * **</li>
+								  	<ul class="a">
+									  <p>* A haptic hand controller is required to simulate drilling.<br>** SurgiSim can be used with a variety of commercially-available haptic interfaces including the Geomagic Touch/Sensable Omni by Geomagic and the Omega.6 by  Force Dimension. </p> 
+									  
+									</ul>
+								</ul>
+
                             </div>
                             <!-- end col -->
                         </div>
@@ -199,7 +225,8 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h4 id="line1_3">How do I set up the haptic device?</h4>
-                                <p>Lorem the It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. long established fact that a reader will English.</p>
+                                <p>See <a href="#line3"> Haptic Device Setup</a></p>
+
                             </div>
                             <!-- end col -->
                         </div>
@@ -207,7 +234,11 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h4 id="line1_4">What software/drivers do I need?</h4>
-                                <p>Lorem the It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. long established fact that a reader will English.</p>
+                                <p><a href="https://support.3dsystems.com/s/article/Haptic-Device-Drivers-for-OpenHaptics?language=en_US/" target="_blank">Download Drivers</a></p>
+                                 <ol class="b">
+								  <li> V3.5 Touch Device Driver v2020.7.9 (for Ethernet Touch or Touch X, and USB Touch or Touch X devices).
+								  <li> Following installation of the drivers, there will be two programs available: Geomagic Touch Setup and Diagnostics.</li>
+								</ol>
                             </div>
                             <!-- end col -->
                         </div>
@@ -215,7 +246,18 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h4 id="line1_5">How do I install SurgiSim?</h4>
-                                <p>Lorem the It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. long established fact that a reader will English.</p>
+                                <ol class="b">
+								  <li> Download the installer package from the personalized link provided to you. If your download doesn't start within seconds, click restart the download. In the event you do not have this, please contact us at: <a href="mailto:info@surgisim.ca" target="_blank">info@surgisim.ca</a>.
+								  	<p><a href="http://surgisim.ca/">http://surgisim.ca/</a></p>
+
+								  <li> Look for the app in your Downloads folder and double-click it.</li>
+								  <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+								  <li> Continue through the installation steps.</li>
+								  <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+								  <li> Start SurgiSim!</li>
+								  <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+								</ol>
                             </div>
                             <!-- end col -->
                         </div>
@@ -223,7 +265,66 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h4 id="line1_6">How do I get started?</h4>
-                                <p>Lorem the It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. long established fact that a reader will English.</p>
+                                <ol class="b">
+								  <li> Locate the SurgiSim application in your Program Files folder. Double click on the SurgiSim application.</li>
+								  <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+								  <li> Use the menu on the left to load new specimens, save dissections, and evaluate your dissections. </li>
+								  <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+								  <li> Make sure to complete the on-screen tour.</li>
+								  <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+								</ol>
+                            </div>
+                            <!-- end col -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h4 id="line1_7">How do I load specimens?</h4>
+                                <p> Currently, there are a series of pre-loaded specimens for you to dissect, save, and grade. In the future, you will be able to add specimens from your local hard drive or your shared cloud space.</p>
+
+                                <ol>
+                                	
+                                	<li>Start SurgiSim;</li>
+                                	<p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+                                </ol>
+
+                            </div>
+                            <!-- end col -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h4 id="line1_8">How do I interact with the specimens?</h4>
+
+                                <p><b>Monitor Mode (2D)</b></p>
+                                <p>Using your mouse, you can interact with the specimen through rotation (left click) and translation (right click)</p>
+                                <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+                                <p><b>Virtual Reality (VR) Mode</b></p>
+                                <p>Using your Oculus controllers, you can grab the specimen directly and place it in any desired location.</p>
+                                <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+                                <p><b>2D Workspace</b></p>
+                                <P>Use the toolbox on the left to undo, redo, reset your workspace/specimen, enable Virtual Reality mode and other things. Use the top bar menu to load, save, and evaluate dissections. Click help if you ever need it!</P>
+                                <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+
+
+                            </div>
+                            <!-- end col -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h4 id="line1_9">Which file types can I upload?</h4>
+
+                                <p>Use your local hospital-specific DICOM imaging viewer to locate a patient case. Choose a computed tomography (CT) temporal bone protocol with or without contrast. Within this protocol, select a series with slices that are at most 0.625 mm thick. Download the series into a folder on your computer that you can easily find. This folder will contain all of the slices in that particular series and this folder will subsequently be uploaded into SurgiSim *. <br><br><i> * This feature is currently in development.</i></p>
+
+
+
+
+
                             </div>
                             <!-- end col -->
                         </div>
@@ -238,11 +339,20 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h2 class="dark-text">Getting Started<hr></h2>
+
+                                <ul class="b">
+								  <li> Download the installer package from the personalized link provided to you. If your download doesn't start within seconds, click restart the download. In the event you do not have this, please contact us at: <a href="mailto:info@surgisim.ca" target="_blank">info@surgisim.ca</a>.
+								  <li> Look for the app in your Downloads folder and double-click it.</li>
+								  <li> Continue through the installation steps.</li>
+								  <li> Ensure the haptic device power is on and is connected to the computer. </li>
+								  <li> Locate the SurgiSim application in your Program Files folder. Double click on the SurgiSim application.</li>
+								  <li> Use the menu on the left to load new specimens, save dissections, and evaluate your dissections. </li>
+								  <li>Make sure to complete the on-screen tour. </li>
+								</ul>
                             </div>
                             <!-- end col -->
                         </div>
                         <!-- end row -->
-
                     </section>
                     <!-- end section -->
 
@@ -253,6 +363,21 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h2 class="dark-text">Haptic Device Setup <hr></h2>
+								<ol style="font-size: 16px;">
+								  <li>Ensure power is on and the device is connected to the computer (ethernet, USB, FireWire).</li>
+								  <li>Select Geomagic Touch Setup and follow on-screen prompts for establishing a connection with your haptic device. If you do not see your device, click the “Rescan” button on the bottom-left of the screen.
+								  	<ul class="a">
+								  		<li><i>Note, if you’re finding the device is not being identified, please uninstall the v2020.7.9 drivers and opt for the v2018.10.22 drivers instead.</i></li>
+								  	</ul>
+								  </li>
+								  <li>Select your haptic device, by clicking on the image on the left. You will then be prompted “press the button on the back of the device.” This small pairing button is located on the back right of the device.</li>
+								  <li>You will be prompted to insert the stylus into the well to finalize calibration.</li>
+								  <li>To confirm that the device is working, feel free to use the “Sphere Simulation Test,” or the “Hollow Cube Simulation Test.”</li>
+								  <li>Once the haptic device is set-up, click the “Save Configuration” button located near the bottom of the screen. The Touch Smart Setup program will automatically close.</li>
+								  <li>Following the setup, Touch Smart Setup will close. You can now open the Diagnostics application to test the functionality of the haptic device with various tests including:</li>
+								</ol>
+								<p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
                             </div>
                             <!-- end col -->
                         </div>
@@ -267,27 +392,18 @@
 
                         <div class="row">
                             <div class="col-md-12 left-align">
-                                <h2 class="dark-text">Monitor-based (2D) Mode <hr></h2>
+                                <h2 class="dark-text">Monitor Mode / two-dimensional (2D) <hr></h2>
+
+                                <ul class="b">
+								  		<li>By default, SurgiSim will load in Monitor mode. In the future, there will be support for multiple 3D modes beyond head-mounted displays.</li>
+								  		<li>Evaluation mode cannot be used in Monitor mode. Otherwise, SurgiSim offers the same functionality as in VR mode.</li>
+								</ul>
                             </div>
                             <!-- end col -->
                         </div>
                         <!-- end row -->
 
 
-                    </section>
-                    <!-- end section -->
-
-<!-- 2D WORKSPACE -->
-
-                    <section id="line5" class="section">
-
-                        <div class="row">
-                            <div class="col-md-12 left-align">
-                                <h2 class="dark-text">2D Workspace <hr></h2>
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
                     </section>
                     <!-- end section -->
 
@@ -298,6 +414,8 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h2 class="dark-text">Downloading Specimens <hr></h2>
+                                <p>In the future you will be able to upload patient specific images from your institution’s DICOM imaging viewer.</p>
+
                             </div>
                             <!-- end col -->
                         </div>
@@ -312,6 +430,13 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h2 class="dark-text">Loading Specimens <hr></h2>
+                                <ul class="b">
+                                	
+                                	<li>Currently, there are a series of pre-loaded specimens for you to dissect, save, and grade.</li>
+                                	<li>In the future, you will be able to add specimens from your local hard drive or your shared cloud space.</li>
+                                	<p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+                                </ul>
                             </div>
                             <!-- end col -->
                         </div>
@@ -327,6 +452,13 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h2 class="dark-text">Saving Dissections <hr></h2>
+                                <ul class="b">
+                                	
+                                	<li>By clicking save, you can return to your dissection at any time.</li>
+                                	<li>Feel free to rename the dissection file so you can easily identify it next time using the on-screen keyboard.</li>
+                                	<p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+                                </ul>
                             </div>
                             <!-- end col -->
                         </div>
@@ -342,6 +474,14 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h2 class="dark-text">Evaluating Dissections <hr></h2>
+                                <ul class="b">
+                                	
+                                	<li>At this time, evaluations can only be performed in monitor mode.</li>
+                                	<li>With any dissected specimen, you can begin evaluation by clicking the “Evaluate” button located at the top of your screen. </li>
+                                	<li>Please allow several minutes for the evaluation process to complete.</li>
+                                	<p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+                                </ul>
                             </div>
                             <!-- end col -->
                         </div>
@@ -357,6 +497,54 @@
                         <div class="row">
                             <div class="col-md-12 left-align">
                                 <h2 class="dark-text">Virtual Reality (VR) Mode <hr></h2>
+
+                                <ul class="b">
+                                	
+                                	<li>Ensure your Oculus headset is connected and working.</li>
+                                	<li>Click “Enable VR” on the left of the screen. Follow the on-screen instructions.</li>
+
+                                	<p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+
+                                </ul>
+
+                                <h3 id="line10_1"><b>Using the VR Microscope</b></h3>
+
+                                <ul class="b">
+                                	
+                                	<li>Use your hands to move the specimen under the microscope and manipulate it into your preferred orientation.</li>
+                                	<li>Using one or both of the hand controllers, reach for the VR microscope handles to move the microscope. You will notice a small vibration when your hand is in proximity to the microscope’s handles.</li>
+                                	<ul class="a">
+                                		
+                                		<li>Tip: use your non-dominant hand to operate the Oculus controller. Your dominant hand will operate the haptic device.</li>
+                                	</ul>
+                                	<li>The realism of the VR microscope weight may require you to use both hands to maneuver it. </li>
+
+                                	<p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
+                                </ul>
+
+                                <p><i>*****Screenshot of the handpieces from VR here</i></p>
+
+                                <h3 id="line10_2"><b>Drilling in VR</b></h3>
+
+                                <ul class="b">
+                                	
+                                	<li>In both modes, the haptic device (once connected and operational) can be used immediately.</li>
+                                	<ul class="a">
+                                		
+                                		<li>There are two buttons on the haptic device. Pressing the lower button turns the drill on. Releasing the lower button will turn the drill off. </li>
+                                		<li>Pressing the upper button will engage the drill clutch allowing you to move the stylus in a more comfortable position.</li>
+                                		<li>If you are using a pedal, this will engage the drill as well.</li>
+                                	</ul>
+                                	<li>Positioning the haptic device closer to your dominant hand will improve ergonomics and ease of use.</li>
+
+                                </ul>
+
+                                <p><i>*****Photo of user using VR and haptic device</i></p>
+
+                                <p style="color: red;"><i><b>ScreenShots / Photos / Videos here</b></i></p>
+
                             </div>
                             <!-- end col -->
                         </div>
@@ -365,36 +553,6 @@
                     </section>
                     <!-- end section -->
 
-<!-- USING THE VR MICROSCOPE -->
-
-                    <section id="line11" class="section">
-
-                        <div class="row">
-                            <div class="col-md-12 left-align">
-                                <h2 class="dark-text">Using the VR Microscope <hr></h2>
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                    </section>
-                    <!-- end section -->
-
-<!-- DRILLING IN VR -->
-
-                    <section id="line12" class="section">
-
-                        <div class="row">
-                            <div class="col-md-12 left-align">
-                                <h2 class="dark-text">Drilling in VR <hr></h2>
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-
-                    </section>
-                    <!-- end section -->
 
 <!-- TROUBLESHOOTING -->
 
@@ -402,8 +560,7 @@
 
                         <div class="row">
                             <div class="col-md-12 left-align">
-                                <h2 class="dark-text">Troubleshooting (Common problems/errors)
- 								<hr></h2>
+                                <h2 class="dark-text">Troubleshooting (Common problems/errors)<hr></h2>
                             </div>
                             <!-- end col -->
                         </div>
@@ -412,8 +569,53 @@
                         <div class="row">
 
                             <div class="col-md-12 left-align">
-                                <h4 id="line7_1">VR HMD not working</h4>
+                                <h4 id="line7_1">Oculus headset not detected/not working</h4>
+                                <ol>
+                                	
+                                	<li>Close SurgiSim;</li>
+                                	<li>Ensure your headset is connected to your computer’s DisplayPort and USB port;</li>
+                                	<li>If your headset is working properly, the Oculus home screen will be open;</li>
+                                	<li>Ensure your drivers and the Oculus software are up-to-date.</li>
+                                	<li>Please consult the Oculus support page for further troubleshooting: <a href="https://support.oculus.com/347068065953251/" target="_blank">Oculus Support</a></li>
+                                </ol>
+                            </div>
+                            <!-- end col -->
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 left-align">
+                                <h4 id="line7_2">Haptic device not working</h4>
+                                	<ol>
+                                	
+                                	<li>Close SurgiSim;</li>
+                                	<li>Ensure the haptic device is connected to your desktop via USB, ethernet, or FireWire. As well, ensure the haptic device has power connected;</li>
+                                	<li>Open the Touch Smart Setup application located in your Program Files folder. If your device is not detected you will see the following screen:</li>
+	                                	<ul class="a">
+	                                		
+	                                		<li>“No haptic devices found. Check all connections and select the “Rescan” button.”</li>
+
+	                                	</ul>
+                                	<li>If you are still experiencing connectivity issues, we recommend restarting your computer;</li>
+                                		<ul class="a">
+	                                		
+	                                		<li>Prior to opening Touch Smart Setup, ensure all connections (power, USB/Ethernet/FireWire) are established.</li>
+
+	                                	</ul>
+
+                                </ol>
+
+
                                 <p>Lorem the It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. long established fact that a reader will English.</p>
+                            </div>
+                            <!-- end col -->
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 left-align">
+                                <h4 id="line7_2">Evaluation in VR mode doesn't work</h4>
+                                <p>Currently, the evaluation tool is only available in monitor mode. Disable Virtual Reality Mode and access the Evaluation functionality using the main menu.</p>
                             </div>
                             <!-- end col -->
                         </div>

@@ -94,7 +94,7 @@ img.aligncenter {
 }
 
 ul {
-    padding: 0;
+    
     list-style: none;
 }
 
@@ -161,6 +161,7 @@ sub {
 
 p {
     padding: 0 0 20px 0;
+
 }
 
 .check li:before {
@@ -174,8 +175,32 @@ p {
     top: 2px;
 }
 
+ul.a {
+  list-style-type: circle;
+  font-size: 16px;
+}
+
+ul.b {
+  list-style-type: square;
+  font-size: 16px;
+}
+
+ol {
+  font-size: 16px;
+}
+
+ol.c {
+  list-style-type: upper-roman;
+  font-size: 16px;
+}
+
+ol.d {
+  list-style-type: lower-alpha;
+  font-size: 16px;
+}
+
 .check li {
-    font-size: 14px;
+    font-size: 16px;
     list-style: none;
     margin-bottom: 4px;
 }
