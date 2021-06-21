@@ -11,17 +11,58 @@
   		<img id="logo" src="images/SurgiSim logo.png">
   		<h4>Enabling surgeons to perform the best surgery</h4>
   		<h2 style="margin-top: 80;">SurgiSim beta 1.0 is now available to download!</h2>
+  		<br>
+  		<br>
   		<button id="bt_download"></button>
-  		<h4>Windows Installer | 223 MB | <button id="bt_info"><u>info</u></button></h4>
+  		<br>
+  		<h4>Windows Installer | 658 MB | <button id="bt_info"><u>info</u></button> | <button id="bt_info" ><a id="bt_info" href="help/index.html">Help Center</a></button></h4></h4>
 
-	<!-- The Modal -->
-			<div id="myModal" class="modal">
+	<!-- The Modal Info -->
+			<div id="info" class="modal">
 
 			  <!-- Modal content -->
 			  <div class="modal-content">
 			    <span class="close">&times;</span>
 			    <h3 style="font-weight: 1000; color: #4c4c4c;">System requirements</h3>
-			    <p>....</p>
+
+			    <p><b>Recommended</b></p>
+
+			    <p>
+			    Requires a 64-bit processor and operating system
+			    <br>
+			    OS: Windows 10 (64-Bit versions)
+			    <br>
+			    Processor: intel(r) Core™ i7 6700k or better
+			    <br>
+				RAM: 16GB
+				<br>
+				GPU: NVIDIA GeForce RTX 3070
+				<br>
+				Displays: Oculus Rift S or Oculus Quest 2
+				<br>
+				Haptic device: Geomagic Touch Haptic (20% Education discount available at <a target="_blank" href="https://www.rapid3d.ca"> rapid3d.ca)</a>
+				</p>
+
+			  </div>
+
+			</div>
+
+	<!-- The Modal Download -->
+			<div id="download" class="modal">
+
+			  <!-- Modal content -->
+			  <div class="modal-content">
+			    <span class="close2">&times;</span>
+			    <h3 style="font-weight: 1000; color: #4c4c4c;">Download SurgiSim Installer</h3>
+
+			   <form action="main.php" method="post">
+			    <label for="name">Your Name</label>
+			    <input type="text"  name="name" placeholder="Your name..">
+			    <label for="lname">Email</label>
+			    <input type="email"  name="email" placeholder="Your email..">
+			    <input type="submit" value="Submit">
+			  </form>
+
 			  </div>
 
 			</div>
@@ -33,20 +74,36 @@
 
   	</div>
 
-  	
 <script>
-	var modal = document.getElementById("myModal");
+	var info = document.getElementById("info");
 	var btn = document.getElementById("bt_info");
 	var span = document.getElementsByClassName("close")[0];
 	btn.onclick = function() {
-	  modal.style.display = "block";
+	  info.style.display = "block";
 	}
 	span.onclick = function() {
-	  modal.style.display = "none";
+	  info.style.display = "none";
 	}
 	window.onclick = function(event) {
-	  if (event.target == modal) {
-	    modal.style.display = "none";
+	  if (event.target == info) {
+	    info.style.display = "none";
+	  }
+	}
+</script>
+
+<script>
+	var download = document.getElementById("download");
+	var btn = document.getElementById("bt_download");
+	var span2 = document.getElementsByClassName("close2")[0];
+	btn.onclick = function() {
+	  download.style.display = "block";
+	}
+	span2.onclick = function() {
+	  download.style.display = "none";
+	}
+	window.onclick = function(event) {
+	  if (event.target == info) {
+	    download.style.display = "none";
 	  }
 	}
 </script>

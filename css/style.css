@@ -129,18 +129,19 @@ p {
   padding: 20px;
   border: none;
   width: 40%;
+  line-height: 1.5;
 }
 
 /* The Close Button */
-.close {
+.close, .close2 {
   color: #aaaaaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.close, .close2:hover,
+.close, .close2:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
