@@ -67,6 +67,15 @@ p {
 
 }
 
+#logoFeedback{
+  
+  padding-top: 2.5%;
+  margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+}
+
 #bt_download{
 
 	background-image: url(../images/bt_download.png);
