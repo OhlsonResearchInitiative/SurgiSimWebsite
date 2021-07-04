@@ -76,6 +76,18 @@ p {
 
 }
 
+#form{
+  
+  padding-top: 5%;
+  margin-left: auto;
+    margin-right: auto;
+    display: block;
+    font-family: Roboto;
+
+
+
+}
+
 #bt_download{
 
 	background-image: url(../images/bt_download.png);
