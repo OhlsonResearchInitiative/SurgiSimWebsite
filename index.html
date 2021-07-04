@@ -60,15 +60,63 @@
 					<form id="form" action="https://formspree.io/f/moqylraa" method="POST">
 					  <label>
 					    Your email:
-					    <input type="email" name="_replyto" required>
+					    <input type="email" placeholder="me@example.com" name="_replyto" required>
 					  </label>
 					  <label style="margin-left: 25px;"> 
 					    Your name:
-					    <textarea type="message" required>
-					  </textarea>
-					  
-					  <a download href="images/SurgiSim logo.png"><button  style="margin-left: 25px;" type="submit">Download</button></a>
+					    <input type="message" required>
+					  </input>
+
 					</form>
+					
+					<a id="downloadSS"><button type="button" style="margin-left: 25px;">Download</button></a>
+
+					<script type="text/javascript">
+
+						function validateEmail(elementValue){      
+						   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+						   return emailPattern.test(elementValue); 
+						 } 
+
+
+						function checkform(form) {
+					    // get all the inputs within the submitted form
+					    var inputs = form.getElementsByTagName('input');
+					    for (var i = 0; i < inputs.length; i++) {
+					        // only validate the inputs that have the required attribute
+					        if(inputs[i].hasAttribute("required")){
+					            if(inputs[i].value == ""){
+					                // found an empty field that is required
+					                alert("Please fill all required fields");
+					                return false;
+					            }else{
+					            	if (i==0) {
+
+					            		if(validateEmail(inputs[i].value) == false){
+
+					            			alert("Invalid email!");
+					            			return false;
+					            		}
+					            	}
+					            }
+					        }
+					    }
+					    return true;
+					}
+					
+						var downloadSS = document.getElementById('downloadSS');
+						var form = document.getElementById('form');
+						downloadSS.onclick = function() {
+							
+							 if (checkform(form) == false){
+							 }else{
+							 	
+							 	window.open("Placeholder File.exe");
+							 	document.getElementById("form").submit();
+							 }
+						}
+
+					</script>
 
 			  </div>
 
