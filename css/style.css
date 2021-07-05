@@ -83,7 +83,7 @@ p {
 
 }
 
-#bt_download, #downloadSS{
+#bt_download{
 
 	background-image: url(../images/bt_download.png);
 	padding-top: 5%;
