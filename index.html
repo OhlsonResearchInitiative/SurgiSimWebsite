@@ -52,24 +52,29 @@
 			<div id="download" class="modal">
 
 			  <!-- Modal content -->
-			  <div class="modal-content">
+			  <div style="text-align: center; display: block;" class="modal-content">
 			    <span class="close2">&times;</span>
 			    <h3 style="font-weight: 1000; color: #4c4c4c;">Download SurgiSim Installer</h3>
 
-
+			    	<div style="margin: 0 auto;">
+			    		
 					<form id="form" action="https://formspree.io/f/moqylraa" method="POST">
-					  <label>
-					    Your email:
-					    <input type="email" placeholder="me@example.com" name="_replyto" required>
-					  </label>
-					  <label style="margin-left: 25px;"> 
-					    Your name:
-					    <input type="message" required>
-					  </input>
+						<div >
+							<label style="font-size: 20px;">
+						    Your email:
+						    <input style="font-size: 20px;" type="email" placeholder="me@example.com" name="_replyto" required>
+					  		</label>
+						</div>
+						<br>
+						<br>
+						<div>
+							<a  id="downloadSS"><button type="button" id="bt_download"></button></a>
+						</div>
 
 					</form>
+
+			    	</div>
 					
-					<a id="downloadSS"><button type="button" style="margin-left: 25px;">Download</button></a>
 
 					<script type="text/javascript">
 
@@ -87,7 +92,7 @@
 					        if(inputs[i].hasAttribute("required")){
 					            if(inputs[i].value == ""){
 					                // found an empty field that is required
-					                alert("Please fill all required fields");
+					                alert("Please enter your email address");
 					                return false;
 					            }else{
 					            	if (i==0) {
