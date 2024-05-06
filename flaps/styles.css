@@ -1,0 +1,215 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+
+
+.iphone-container {
+    width: 375px;
+    height: 812px;
+    background-color: black;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    border-radius: 38px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Shadow for 3D effect */
+    position: relative; /* Needed for absolute positioning inside */
+    -ms-overflow-style: none; /* Internet Explorer and Edge */
+    scrollbar-width: none; /* Firefox */
+    display: flex;      /* Enables flexbox */
+    flex-direction: column; /* Stacks children vertically */
+    justify-content: space-between; /* Aligns children to start and end */
+}
+
+.iphone-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+
+.header-area {
+    display: flex; /* Enables Flexbox */
+    flex-direction: column; /* Stacks children vertically */
+    justify-content: flex-end; /* Aligns children to the end of the container (bottom) */
+    background-color: black; /* Black background extending from the header */
+    color: white; /* Ensures text is visible */
+    text-align: left;
+    height: 141px;
+    position: fixed;
+    z-index: 1000; /* Ensure it's above other content */
+    width: 375px;
+    border-radius: 38px; /* Rounded corners */
+
+
+}
+
+.header {
+    margin-left: 16px;
+    margin-bottom: 16px;
+
+}
+
+
+
+.modules {
+    display: flex;        /* Enable flexbox */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center children vertically */
+    align-items: center;   /* Center children horizontally */
+    padding-top: 141px; /* Adjust this value to match the height of your header */
+
+}
+
+.lessons {
+    display: flex;        /* Enable flexbox */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center children vertically */
+    align-items: center;   /* Center children horizontally */
+    padding-top: 141px; /* Adjust this value to match the height of your header */
+
+}
+.module {
+    position: relative; /* Enables absolute positioning inside */
+    overflow: hidden; /* Ensures nothing goes outside the bounds */
+}
+
+.lesson {
+    position: relative; /* Enables absolute positioning inside */
+    overflow: hidden; /* Ensures nothing goes outside the bounds */
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+
+.module-image {
+    width: 100%; /* Ensures the image covers the full width */
+    height: 100%; /* Ensures the image covers the full height */
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+    width: 343px; /* Set the width as specified */
+    height: 240px; /* Set the height as specified */
+}
+
+.lesson-image {
+    width: 100%; /* Ensures the image covers the full width */
+    height: 100%; /* Ensures the image covers the full height */
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+    width: 343px; /* Set the width as specified */
+    height: 67px; /* Set the height as specified */
+}
+
+.back {
+    width: 24px; /* Set the width as specified */
+    height: 24px; /* Set the height as specified */
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+    color: red;
+    margin-left: 16px;
+    margin-bottom: 10px;
+}
+
+
+.module-link {
+    display: block; /* Full area clickable */
+}
+
+
+h1, h2 {
+    margin: 0;
+}
+
+h2 {
+    padding-top: 20px;
+}
+
+
+/*Lessons*/
+
+.back-button, .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.back-button {
+margin-left: 16px;
+}
+
+.close-button {
+margin-right: 16px;
+}
+
+.back-button img, .close-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.title {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+}
+
+.sub-title {
+    margin-top: 4px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: #BDC1FE;
+
+}
+
+.horizontal-box {
+    display: flex;          /* Activates Flexbox layout mode */
+    justify-content: space-between; /* Spreads out the child elements evenly */
+
+}
+
+.content {
+    display: flex;        /* Enable flexbox */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center children vertically */
+    align-items: left;   /* Center children horizontally */
+    padding-top: 141px; /* Adjust this value to match the height of your header */
+    margin-left: 16px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    margin-right: 16px;
+
+}
+
+.content-title{
+
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: white;
+}
+
+.footer{
+
+ background-color: black; /* Black background for the footer */
+    color: white;      /* Text color for the footer */
+    padding: 10px;     /* Padding inside the footer */
+    text-align: center; /* Centering the text inside the footer */
+}
+
+.next-button {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    background-color: #D0BCFF; /* Purple shade */
+    color: #381E72;
+    margin-bottom: 32px;
+    margin-left: 16px;
+    margin-right: 16px;
+    width: 92%;
+    border: none;
+    padding: 20px 20px;
+    border-radius:50px;
+    cursor: pointer;
+    font-size: 14px;
+
+}
