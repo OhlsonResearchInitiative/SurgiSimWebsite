@@ -6,24 +6,25 @@ body, html {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #181818;
+    overflow: hidden; /* Prevent scrolling outside the iphone-container */
+
 }
-
-
 
 .iphone-container {
     width: 375px;
     height: 100%;
     background-color: black;
-    overflow-y: scroll; /* Enable vertical scrolling */
-    border-radius: 38px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Shadow for 3D effect */
-    position: relative; /* Needed for absolute positioning inside */
-    -ms-overflow-style: none; /* Internet Explorer and Edge */
-    scrollbar-width: none; /* Firefox */
-    display: flex;      /* Enables flexbox */
-    flex-direction: column; /* Stacks children vertically */
-    justify-content: space-between; /* Aligns children to start and end */
+    overflow-y: scroll; /* Keep existing setting */
+    border-radius: 38px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+    -ms-overflow-style: none; /* Style for IE and Edge */
+    scrollbar-width: none; /* Style for Firefox */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    -webkit-overflow-scrolling: touch; /* Add this for better scrolling in iOS WebKit */
 }
 
 .iphone-container::-webkit-scrollbar {
@@ -38,11 +39,13 @@ body, html {
     background-color: black; /* Black background extending from the header */
     color: white; /* Ensures text is visible */
     text-align: left;
-    height: 141px;
+    height: 120px;
     position: fixed;
     z-index: 1000; /* Ensure it's above other content */
     width: 375px;
     border-radius: 38px; /* Rounded corners */
+    top: 0;
+
 
 
 }
@@ -191,10 +194,16 @@ margin-right: 16px;
 
 .footer{
 
- background-color: black; /* Black background for the footer */
-    color: white;      /* Text color for the footer */
-    padding: 10px;     /* Padding inside the footer */
-    text-align: center; /* Centering the text inside the footer */
+    position: fixed; /* Stick the footer to the bottom of the viewport */
+    bottom: 0;
+    width: 375px; /* Full width */
+    background-color: black;
+    color: white;
+    text-align: center;
+    z-index: 1000;
+    border-radius: 38px; /* Rounded corners */
+
+
 }
 
 .next-button {
@@ -205,6 +214,7 @@ margin-right: 16px;
     margin-bottom: 32px;
     margin-left: 16px;
     margin-right: 16px;
+    margin-top: 30px;
     width: 92%;
     border: none;
     padding: 20px 20px;
