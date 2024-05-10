@@ -13,7 +13,7 @@ body, html {
 
 .iphone-container {
     width: 375px;
-    height: 812px;
+    height: 100%;
     background-color: black;
     overflow-y: scroll; /* Enable vertical scrolling */
     border-radius: 38px; /* Rounded corners */
