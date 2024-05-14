@@ -23,7 +23,6 @@ body, html {
 
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     -webkit-overflow-scrolling: touch; /* Add this for better scrolling in iOS WebKit */
-    position: relative;
     -ms-overflow-style: none; /* Style for IE and Edge */
     scrollbar-width: none; /* Style for Firefox */
     display: flex;
@@ -188,6 +187,7 @@ margin-right: 16px;
     font-weight: 200;
     margin-right: 16px;
 
+
 }
 
 .content-title{
@@ -200,13 +200,15 @@ margin-right: 16px;
 
 .footer{
 
-    position: fixed; /* Stick the footer to the bottom of the viewport */
-    bottom: 0;
-    width: 375px; /* Full width */
-    background-color: black;
+
+
     color: white;
+    padding: 10px;
     text-align: center;
     z-index: 1000;
+    position: sticky; /* Makes footer sticky */
+    bottom: 0; /* Aligns it to the bottom */
+
 
 
 }
