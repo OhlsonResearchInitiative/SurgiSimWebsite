@@ -5,7 +5,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     background-color: #181818;
     overflow: hidden; /* Prevent scrolling outside the iphone-container */
 
@@ -13,21 +13,28 @@ body, html {
 
 .iphone-container {
     width: 375px;
-    height: calc(100vh - 50px); /* Less than 100vh to accommodate browser UI */
+    height: 100%; /* Ensures container does not exceed the viewport height */
     background-color: black;
     overflow-y: auto; /* Keep existing setting */
 
+
+
+
+
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    -webkit-overflow-scrolling: touch; /* Add this for better scrolling in iOS WebKit */
     position: relative;
     -ms-overflow-style: none; /* Style for IE and Edge */
     scrollbar-width: none; /* Style for Firefox */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    -webkit-overflow-scrolling: touch; /* Add this for better scrolling in iOS WebKit */
-    padding-bottom: 70px; /* Extra padding to lift footer above browser's native UI */
-    border-radius: 38px;
 
+
+
+  
+
+    
 }
 
 .iphone-container::-webkit-scrollbar {
