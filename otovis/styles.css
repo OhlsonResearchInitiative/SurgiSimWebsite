@@ -1,0 +1,116 @@
+body {
+     font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-image: url("imgs/background.png");
+        background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 20rem;
+}
+
+
+.subheading {
+   
+    font-size: 1.125rem; /* Tailwind text-lg */
+    margin-bottom: 1.5rem;
+}
+
+.description {
+
+    max-width: 50rem;
+    margin: 3rem;
+    text-align: center;
+    font-size: 17px;
+}
+
+.icon {
+    width: 150px;
+}
+
+.features-section .feature-item {
+    display: flex;
+    align-items: center;
+    width: 700px;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.feature-item .feature-icon {
+
+}
+
+.feature-title {
+    margin-left: 2rem;
+    font-size: 1.5rem; /* Tailwind text-xl */
+    font-weight: bold;
+}
+
+.feature-description {
+    margin-left: 2rem;
+}
+
+
+ .gallery-container {
+    margin-top: 50px;
+    width: 80vw;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .gallery {
+    display: flex;
+    gap: 10px;
+  }
+
+  .gallery img {
+    width: 1266px;
+    height: 585px;
+    object-fit: cover;
+    
+  }
+
+  .team-section {
+  padding: 3rem 2rem;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.team-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.team-members {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.team-member {
+  text-align: center;
+}
+
+.team-member img {
+
+    max-width: 15em;
+
+}
+
+.team-member p {
+  font-size: 1rem;
+  color: #333;
+}
