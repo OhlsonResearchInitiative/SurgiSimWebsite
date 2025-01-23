@@ -115,3 +115,163 @@ body {
   font-size: 1rem;
   color: #333;
 }
+
+
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll; /* Improve scrolling performance on mobile */
+        background-size: cover; /* Ensure background image scales on smaller screens */
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .description {
+        font-size: 15px;
+        margin: 1.5rem;
+    }
+
+    .features-section .feature-item {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    .feature-title,
+    .feature-description {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .icon {
+        width: 100px;
+        margin: 0 auto;
+    }
+
+    .gallery-container {
+        width: 100%;
+    }
+
+    .gallery img {
+        width: 100%;
+        height: auto;
+    }
+
+    .team-members {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .team-member img {
+        max-width: 10em;
+    }
+}
+
+
+.feature-item {
+    display: flex;
+    align-items: flex-start; /* Aligns all child elements to the top */
+    gap: 1.5rem; /* Spacing between the image and text */
+}
+
+.icon-button {
+    width: 10rem; /* Larger button width */
+    height: auto; /* Maintain aspect ratio */
+    cursor: pointer;
+    transition: transform 0.2s ease; /* Add hover effect */
+}
+
+.icon-button:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+
+
+
+.gallery-container {
+    width: 100%;
+    padding: 2rem;
+    background-color: #f8f8f8; /* Optional background for contrast */
+}
+
+.gallery {
+    display: grid;
+    gap: 1rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%; /* Allow images to resize naturally */
+    object-fit: contain; /* Ensure the entire image is visible */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-image:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for hover effect */
+}
+
+@media (min-width: 640px) {
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .gallery {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Lightbox Overlay */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.lightbox-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-overlay.active {
+    display: flex;
+}
+
+/* Navigation Buttons */
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.lightbox-prev {
+    left: 2rem;
+}
+
+.lightbox-next {
+    right: 2rem;
+}
