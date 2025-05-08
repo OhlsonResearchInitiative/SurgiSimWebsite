@@ -1,0 +1,261 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: black;
+    height: 100%;
+}
+
+
+.container {
+    background-color: black;
+    width: 80%;
+    margin: 0 auto;
+    height: 100%;
+}
+
+
+
+.header {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    color: white;
+    background-color: black;
+    z-index: 1000;
+    position: fixed;
+    position: sticky;
+    top: 0;
+    height: 10%;
+}
+
+.lesson-header {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    color: white;
+    background-color: black;
+    z-index: 1000;
+    position: fixed;
+    position: sticky;
+    top: 0;
+    height: 6%;
+}
+
+.module_header{
+    padding-bottom: 0px;
+    color: white;
+    z-index: 1000;
+}
+
+
+.modules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 20px;  
+}
+
+.module {
+  
+}
+.lesson {
+
+  display: grid;
+  /* 3 columns (icon/text/arrow) and 2 rows (number/name) */
+  grid-template-columns: auto 1fr auto;
+
+  grid-template-areas:
+    "icon number arrow"
+    "icon name   arrow";
+  align-items: center;
+  gap: 4px 16px;           /* row-gap / column-gap */
+  background-color: #181818;
+  border-radius: 15px;
+  padding: 20px 24px;
+  margin: 20px 0 20px 0;
+}
+
+.lesson > div {
+  grid-area: icon;
+  width: 32px;
+  height: 32px;
+  background: url('imgs/description.svg') no-repeat center/contain;
+}
+
+/* number in row 1, column 2 */
+.lesson-number {
+  grid-area: number;
+  margin: 0;
+  font: 600 13px/1 Inter, sans-serif;
+  text-transform: uppercase;
+  color: #9A9A9A;
+  padding-bottom: 10px;
+}
+
+/* name in row 2, column 2 */
+.lesson-name {
+  grid-area: name;
+  margin: 0;
+  font: 400 24px/1 Inter, sans-serif;
+  color: #fff;
+}
+
+/* chevron spanning both rows in col 3 */
+.lesson::after {
+  content: '›';
+  grid-area: arrow;
+  justify-self: end;
+  font-size: 20px;
+  color: #9A9A9A;
+  opacity: 0.6;
+}
+
+.icon {
+  grid-area: icon;
+  width: 32px;
+  height: 32px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* per‐icon overrides */
+.lesson.one   .icon { background-image: url('imgs/description.svg'); }
+.lesson.two  .icon { background-image: url('imgs/indications.svg'); }
+.lesson.three  .icon { background-image: url('imgs/key.svg'); }
+.lesson.four  .icon { background-image: url('imgs/pre.svg'); }
+.lesson.five  .icon { background-image: url('imgs/suitable.svg'); }
+.lesson.six  .icon { background-image: url('imgs/simulated.svg'); }
+.lesson.seven  .icon { background-image: url('imgs/post.svg'); }
+.lesson.eight  .icon { background-image: url('imgs/potential.svg'); }
+.lesson.nine  .icon { background-image: url('imgs/test.svg'); }
+
+.image {
+    width: 100%; /* Ensures the image covers the full width */
+    height: 100%; /* Ensures the image covers the full height */
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+}
+
+.module_image{
+
+    max-width: 100%; /* Ensures the image covers the full width */
+    max-height: 100px; /* Ensures the image covers the full height */
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+
+}
+
+@media (max-width: 599px) {
+    .modules {
+      grid-template-columns: repeat(1, 1fr); /* 3 equal columns */
+      gap: 0px; 
+  }
+
+    .image {
+        max-width: 100%;
+
+    }
+}
+
+@media (min-width: 600px) {
+    .modules {
+      grid-template-columns: repeat(2, 1fr); /* 3 equal columns */
+  }
+}
+      
+}
+@media (min-width: 840px) {
+
+    .modules {
+      grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  }
+      
+}
+@media (min-width: 1200px) {
+
+      .modules {
+      grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  }
+      
+}
+@media (min-width: 1600px) {
+
+      .modules {
+      grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  }
+      
+}
+
+.back {
+    width: 24px; /* Set the width as specified */
+    height: 24px; /* Set the height as specified */
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+    margin-bottom: 10px;
+}
+
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #fff;            /* your chosen color */
+  text-decoration: none;  /* optional: remove underline */
+  cursor: pointer;
+}
+
+.back-button, .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+.next-button {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    background-color: #D0BCFF; /* Purple shade */
+    color: #381E72;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    width: 100%;
+    border: none;
+    padding: 20px 20px;
+    border-radius:50px;
+    cursor: pointer;
+    font-size: 14px;
+
+}
+
+.title {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: white;
+}
+
+.sub-title {
+    margin-top: 4px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: #BDC1FE;
+
+}
+
+.footer{
+    position: fixed;
+  bottom: 0;
+  width: 80%;
+  z-index: 1000;
+}
+
+.content-title{
+
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+}
+
+.horizontal-box {
+    display: flex;          /* Activates Flexbox layout mode */
+    justify-content: space-between; /* Spreads out the child elements evenly */
+    position: sticky;
+}
