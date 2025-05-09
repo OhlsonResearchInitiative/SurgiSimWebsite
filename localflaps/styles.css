@@ -16,11 +16,6 @@ body, html {
     height: 100%; /* Ensures container does not exceed the viewport height */
     background-color: black;
     overflow-y: auto; /* Keep existing setting */
-
-
-
-
-
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     -webkit-overflow-scrolling: touch; /* Add this for better scrolling in iOS WebKit */
     -ms-overflow-style: none; /* Style for IE and Edge */
@@ -29,12 +24,6 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
 
-
-
-  
-
-    
-}
 
 .iphone-container::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */

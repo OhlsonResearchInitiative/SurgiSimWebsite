@@ -259,3 +259,23 @@ a:active {
     justify-content: space-between; /* Spreads out the child elements evenly */
     position: sticky;
 }
+
+
+.img{
+
+    max-width: 100%;
+    max-height: 350px;  
+    margin-top: 16px;
+
+}
+
+.footer2{
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /* styling: */
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+
+}
