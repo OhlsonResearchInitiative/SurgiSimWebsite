@@ -15,17 +15,50 @@ body, html {
 }
 
 
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.video-container iframe,
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0; /* Remove default iframe border */
+}
 
 .header {
-    padding-top: 32px;
-    padding-bottom: 32px;
-    color: white;
-    background-color: black;
-    z-index: 1000;
-    position: fixed;
-    position: sticky;
-    top: 0;
-    height: 10%;
+  padding: 32px;
+  color: white;
+  background-color: black;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Spacing between logos and about link */
+}
+
+.header-logo {
+  max-height: 40px; /* Adjust size as needed */
+  width: auto;
+}
+
+.about-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
 }
 
 .lesson-header {
@@ -146,7 +179,12 @@ body, html {
     .modules {
       grid-template-columns: repeat(1, 1fr); /* 3 equal columns */
       gap: 0px; 
+
   }
+
+  .header-logo {
+  max-height: 20px; /* Adjust size as needed */
+}
 
     .image {
         max-width: 100%;
@@ -181,6 +219,17 @@ body, html {
       grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
   }
       
+}
+
+@media (max-width: 1200px) {
+    .modules {
+      grid-template-columns: repeat(1, 1fr); /* 3 equal columns */
+      gap: 0px; 
+
+  }
+
+  .header-logo {
+  max-height: 30px; /* Adjust size as needed */
 }
 
 .back {
