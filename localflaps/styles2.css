@@ -225,8 +225,9 @@ body, html {
     .modules {
       grid-template-columns: repeat(1, 1fr); /* 3 equal columns */
       gap: 0px; 
-
   }
+
+}
 
   .header-logo {
   max-height: 30px; /* Adjust size as needed */
