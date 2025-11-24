@@ -1,253 +1,316 @@
+/* =========================================
+   1. BASE & RESET
+   ========================================= */
 body, html {
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
     background-color: black;
     height: 100%;
+    color: white;
 }
 
+a:link, a:visited, a:hover, a:active {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
 
+/* =========================================
+   2. LAYOUT CONTAINERS
+   ========================================= */
 .container {
     background-color: black;
-    width: 80%;
+    width: 90%; /* Better mobile width */
+    max-width: 1200px; /* Cap max width for large screens */
     margin: 0 auto;
-    height: 100%;
+    min-height: 100%;
+    padding-bottom: 80px; /* Space for footer */
 }
 
+/* Grid System (Mobile First approach) */
+.modules {
+    display: grid;
+    grid-template-columns: 1fr; /* Default: 1 column (Mobile) */
+    gap: 20px;
+    padding-bottom: 40px;
+}
+
+/* Tablet: 2 Columns */
+@media (min-width: 600px) {
+    .modules {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .container {
+        width: 85%;
+    }
+}
+
+/* Desktop: 3 Columns */
+@media (min-width: 900px) {
+    .modules {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .container {
+        width: 80%;
+    }
+}
+
+/* =========================================
+   3. MAIN HEADER (Index Page)
+   ========================================= */
+.header {
+    /* Mobile Default: Stacked & Centered */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 0;
+    background-color: black;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    gap: 16px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.1;
+    font-weight: 700;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.header-logo {
+    height: 28px;
+    width: auto;
+}
+
+.about-link {
+    color: white;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Header Desktop Overrides */
+@media (min-width: 600px) {
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        padding: 32px 0;
+        gap: 0;
+    }
+    .header-right {
+        justify-content: flex-end;
+    }
+    .header h1 {
+        font-size: 36px;
+    }
+    .header-logo {
+        height: 40px;
+    }
+}
+
+/* =========================================
+   4. MODULE HEADER (Sub-pages like Bilobed)
+   ========================================= */
+.module_header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the Title */
+    width: 100%;
+    padding: 20px 0;
+    background-color: black;
+    color: white;
+    z-index: 1000;
+}
+
+/* The Back Button Container */
+.module_header a {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%); /* Perfect vertical centering */
+    padding: 10px; /* Hit area buffer */
+    z-index: 10;
+}
+
+.back {
+    width: 24px;
+    height: 24px;
+    display: block;
+    object-fit: cover;
+}
+
+.module_header h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 28px;
+    width: 100%;
+}
+
+/* =========================================
+   5. LESSON CARDS
+   ========================================= */
+.lesson {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+        "icon number arrow"
+        "icon name   arrow";
+    align-items: center;
+    gap: 4px 16px;
+    background-color: #181818;
+    border-radius: 15px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    transition: transform 0.2s ease;
+}
+
+.lesson:hover {
+    background-color: #222;
+}
+
+.lesson > div {
+    grid-area: icon;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Specific Icons */
+.lesson.one .icon   { background-image: url('imgs/description.svg'); }
+.lesson.two .icon   { background-image: url('imgs/indications.svg'); }
+.lesson.three .icon { background-image: url('imgs/key.svg'); }
+.lesson.four .icon  { background-image: url('imgs/pre.svg'); }
+.lesson.five .icon  { background-image: url('imgs/suitable.svg'); }
+.lesson.six .icon   { background-image: url('imgs/simulated.svg'); }
+.lesson.seven .icon { background-image: url('imgs/post.svg'); }
+.lesson.eight .icon { background-image: url('imgs/potential.svg'); }
+.lesson.nine .icon  { background-image: url('imgs/test.svg'); }
+
+.lesson-number {
+    grid-area: number;
+    margin: 0;
+    font: 600 13px/1 Inter, sans-serif;
+    text-transform: uppercase;
+    color: #9A9A9A;
+    padding-bottom: 10px;
+}
+
+.lesson-name {
+    grid-area: name;
+    margin: 0;
+    font: 400 20px/1 Inter, sans-serif;
+    color: #fff;
+}
+
+@media (min-width: 600px) {
+    .lesson-name { font-size: 24px; }
+}
+
+.lesson::after {
+    content: '›';
+    grid-area: arrow;
+    justify-self: end;
+    font-size: 24px;
+    color: #9A9A9A;
+    opacity: 0.6;
+}
+
+/* =========================================
+   6. IMAGES & VIDEO
+   ========================================= */
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.module_image {
+    max-width: 100%;
+    max-height: 100px;
+    object-fit: cover;
+}
+
+.img {
+    max-width: 100%;
+    max-height: 350px;
+    margin-top: 16px;
+    border-radius: 8px;
+}
 
 .video-container {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 aspect ratio */
-  overflow: hidden;
-  margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+    overflow: hidden;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background-color: #000;
 }
 
 .video-container iframe,
 .video-container video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0; /* Remove default iframe border */
-}
-
-.header {
-  padding: 32px;
-  color: white;
-  background-color: black;
-  position: sticky;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 16px; /* Spacing between logos and about link */
-}
-
-.header-logo {
-  max-height: 40px; /* Adjust size as needed */
-  width: auto;
-}
-
-.about-link {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.lesson-header {
-    padding-top: 32px;
-    padding-bottom: 32px;
-    color: white;
-    background-color: black;
-    z-index: 1000;
-    position: fixed;
-    position: sticky;
+    position: absolute;
     top: 0;
-    height: 6%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
 }
 
-.module_header{
-    padding-bottom: 0px;
-    color: white;
+/* =========================================
+   7. FOOTER & BUTTONS
+   ========================================= */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 80%; /* Matches container width */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
+    padding-bottom: 20px;
 }
 
-
-.modules {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-  gap: 20px;  
+.footer2 {
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    padding: 2rem;
 }
 
-.module {
-  
-}
-.lesson {
-
-  display: grid;
-  /* 3 columns (icon/text/arrow) and 2 rows (number/name) */
-  grid-template-columns: auto 1fr auto;
-
-  grid-template-areas:
-    "icon number arrow"
-    "icon name   arrow";
-  align-items: center;
-  gap: 4px 16px;           /* row-gap / column-gap */
-  background-color: #181818;
-  border-radius: 15px;
-  padding: 20px 24px;
-  margin: 20px 0 20px 0;
-}
-
-.lesson > div {
-  grid-area: icon;
-  width: 32px;
-  height: 32px;
-  background: url('imgs/description.svg') no-repeat center/contain;
-}
-
-/* number in row 1, column 2 */
-.lesson-number {
-  grid-area: number;
-  margin: 0;
-  font: 600 13px/1 Inter, sans-serif;
-  text-transform: uppercase;
-  color: #9A9A9A;
-  padding-bottom: 10px;
-}
-
-/* name in row 2, column 2 */
-.lesson-name {
-  grid-area: name;
-  margin: 0;
-  font: 400 24px/1 Inter, sans-serif;
-  color: #fff;
-}
-
-/* chevron spanning both rows in col 3 */
-.lesson::after {
-  content: '›';
-  grid-area: arrow;
-  justify-self: end;
-  font-size: 20px;
-  color: #9A9A9A;
-  opacity: 0.6;
-}
-
-.icon {
-  grid-area: icon;
-  width: 32px;
-  height: 32px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-/* per‐icon overrides */
-.lesson.one   .icon { background-image: url('imgs/description.svg'); }
-.lesson.two  .icon { background-image: url('imgs/indications.svg'); }
-.lesson.three  .icon { background-image: url('imgs/key.svg'); }
-.lesson.four  .icon { background-image: url('imgs/pre.svg'); }
-.lesson.five  .icon { background-image: url('imgs/suitable.svg'); }
-.lesson.six  .icon { background-image: url('imgs/simulated.svg'); }
-.lesson.seven  .icon { background-image: url('imgs/post.svg'); }
-.lesson.eight  .icon { background-image: url('imgs/potential.svg'); }
-.lesson.nine  .icon { background-image: url('imgs/test.svg'); }
-
-.image {
-    width: 100%; /* Ensures the image covers the full width */
-    height: 100%; /* Ensures the image covers the full height */
-    object-fit: cover; /* Ensures the image covers the space without distortion */
-}
-
-.module_image{
-
-    max-width: 100%; /* Ensures the image covers the full width */
-    max-height: 100px; /* Ensures the image covers the full height */
-    object-fit: cover; /* Ensures the image covers the space without distortion */
-
-}
-
-@media (max-width: 599px) {
-    .modules {
-      grid-template-columns: repeat(1, 1fr); /* 3 equal columns */
-      gap: 0px; 
-
-  }
-
-  .header-logo {
-  max-height: 20px; /* Adjust size as needed */
-}
-
-    .image {
-        max-width: 100%;
-
-    }
-}
-
-@media (min-width: 600px) {
-    .modules {
-      grid-template-columns: repeat(2, 1fr); /* 3 equal columns */
-  }
-}
-      
-}
-@media (min-width: 840px) {
-
-    .modules {
-      grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-  }
-      
-}
-@media (min-width: 1200px) {
-
-      .modules {
-      grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-  }
-      
-}
-@media (min-width: 1600px) {
-
-      .modules {
-      grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-  }
-      
-}
-
-@media (max-width: 1200px) {
-    .modules {
-      grid-template-columns: repeat(1, 1fr); /* 3 equal columns */
-      gap: 0px; 
-  }
-
-}
-
-  .header-logo {
-  max-height: 30px; /* Adjust size as needed */
-}
-
-.back {
-    width: 24px; /* Set the width as specified */
-    height: 24px; /* Set the height as specified */
-    object-fit: cover; /* Ensures the image covers the space without distortion */
-    margin-bottom: 10px;
-}
-
-
-a:link,
-a:visited,
-a:hover,
-a:active {
-  color: #fff;            /* your chosen color */
-  text-decoration: none;  /* optional: remove underline */
-  cursor: pointer;
+.next-button {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    background-color: #D0BCFF;
+    color: #381E72;
+    width: 100%;
+    border: none;
+    padding: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: 30px 0;
 }
 
 .back-button, .close-button {
@@ -256,26 +319,19 @@ a:active {
     cursor: pointer;
 }
 
-
-.next-button {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 600;
-    background-color: #D0BCFF; /* Purple shade */
-    color: #381E72;
-    margin-bottom: 30px;
-    margin-top: 30px;
-    width: 100%;
-    border: none;
-    padding: 20px 20px;
-    border-radius:50px;
-    cursor: pointer;
-    font-size: 14px;
-
+/* =========================================
+   8. TEXT & UTILITIES
+   ========================================= */
+.content-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
 }
 
 .title {
     font-size: 16px;
-    font-family: 'Inter', sans-serif;
     font-weight: 300;
     color: white;
 }
@@ -283,49 +339,68 @@ a:active {
 .sub-title {
     margin-top: 4px;
     font-size: 12px;
-    font-family: 'Inter', sans-serif;
     font-weight: 300;
     color: #BDC1FE;
-
-}
-
-.footer{
-    position: fixed;
-  bottom: 0;
-  width: 80%;
-  z-index: 1000;
-}
-
-.content-title{
-
-    font-family: 'Inter', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: white;
 }
 
 .horizontal-box {
-    display: flex;          /* Activates Flexbox layout mode */
-    justify-content: space-between; /* Spreads out the child elements evenly */
-    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
+/* ===============================================
+   FINAL FIX: Lesson Header (Flexbox Override)
+   =============================================== */
 
-.img{
-
-    max-width: 100%;
-    max-height: 350px;  
-    margin-top: 16px;
-
+/* 1. Force the container to be a row, not a stack */
+.horizontal-box {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 10px 16px; /* Adds safe spacing from screen edges */
+    position: relative; 
+    z-index: 2000; /* Ensure it sits above everything */
 }
 
-.footer2{
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  /* styling: */
-  color: #fff;
-  text-align: center;
-  padding: 2rem;
+/* 2. TARGET THE MIDDLE TEXT DIV
+   This is the crucial fix. We MUST override the inline 'width: 100%' 
+   so it doesn't push the buttons off the screen. */
+.horizontal-box > div {
+    width: auto !important;      /* Kill the inline 100% width */
+    flex-grow: 1 !important;     /* Allow it to fill the middle space naturally */
+    margin: 0 10px !important;   /* Keep text away from the buttons */
+    position: static !important; /* Reset any positioning issues */
+}
 
+/* 3. TARGET THE BUTTONS (Anchors) 
+   We give them a fixed size so they don't get crushed. */
+.horizontal-box > a {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 44px !important;      /* Fixed touch target size */
+    height: 44px !important;
+    flex-shrink: 0 !important;   /* Prevent them from shrinking to 0 */
+    
+    /* Reset any previous absolute positioning attempts */
+    position: relative !important; 
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+}
+
+/* 4. TARGET THE IMAGES 
+   Override the inline 'max-width: 40%' which makes icons too small. */
+.horizontal-box > a > img {
+    width: 24px !important;      /* Force a visible size */
+    height: 24px !important;
+    max-width: none !important;  /* Ignore the inline limit */
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
