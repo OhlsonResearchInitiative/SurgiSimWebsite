@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BreadBot: Cuisinart Recipe Converter (Grams)</title>
+    <!-- Load Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for appearance */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+        }
+        /* Custom scrollbar for better look */
+        .custom-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background-color: #f1f5f9;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="app-container" class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="bg-slate-900 text-white p-4 shadow-md sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <button id="menu-toggle" class="md:hidden p-1 hover:bg-slate-700 rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-orange-400"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M16 10h1.4c.4 0 .7.5.5.8l-2.4 3.7c-.2.3-.6.3-.8 0l-2.4-3.7c-.2-.3.1-.8.5-.8H8"/></svg>
+                        <h1 class="text-xl font-bold tracking-tight">BreadBot <span class="text-slate-400 font-light hidden sm:inline">| Cuisinart Companion</span></h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+        
+        <div class="flex flex-1 max-w-6xl mx-auto w-full">
+            
+            <!-- Sidebar -->
+            <aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-white border-r border-slate-200 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out z-50">
+                <div class="p-4 border-b border-slate-100 flex justify-between items-center md:hidden">
+                    <span class="font-bold text-slate-700">Categories</span>
+                    <button id="sidebar-close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-slate-500"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+                </div>
+                
+                <nav id="category-list" class="p-4 space-y-1 custom-scroll"></nav>
+                
+                <div class="p-4 mt-auto border-t border-slate-100">
+                    <div class="bg-blue-50 p-3 rounded-lg text-xs text-blue-700 flex gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                        <p>Weights are approximations based on standard ingredient densities (e.g. 1 cup flour = 120g).</p>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Main Content Area -->
+            <main class="flex-1 p-4 md:p-8 min-w-0">
+                <div class="mb-8">
+                    <div class="relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        <input id="search-input" type="text" placeholder="Find a recipe..." class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div id="recipe-list" class="space-y-6">
+                    <!-- Recipe cards will be rendered here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA & CONVERSION LOGIC ---
+        
+        // Standard gram weights for common baking ingredients (approximate)
+        const INGREDIENT_DENSITIES = {
+            "bread flour": 127,
+            "unbleached, all-purpose flour": 120,
+            "all-purpose flour": 120,
+            "whole-wheat flour": 120,
+            "rye flour": 102,
+            "oat flour": 104,
+            "gluten-free, all-purpose flour blend": 140,
+            "semolina flour": 167,
+            "quinoa flour": 110,
+            "tapioca flour": 115,
+            "sorghum flour": 130,
+            "water": 236,
+            "milk": 240,
+            "whole milk": 240,
+            "low-fat milk": 240,
+            "buttermilk": 240,
+            "sour cream": 230,
+            "yogurt": 245,
+            "butter": 226,
+            "unsalted butter": 226,
+            "olive oil": 216,
+            "vegetable oil": 218,
+            "granulated sugar": 200,
+            "sugar": 200,
+            "brown sugar": 213,
+            "light brown sugar": 213,
+            "honey": 340,
+            "maple syrup": 312,
+            "molasses": 337,
+            "confectioners' sugar": 120,
+            "oats": 90,
+            "raisins": 145,
+            "dried cranberries": 120,
+            "chocolate chips": 170,
+            "walnuts": 110,
+            "pecans": 110,
+            "seeds": 135,
+            "salt": 280,
+            "yeast": 150,
+            "baking soda": 220,
+            "baking powder": 190,
+            "cheese": 113,
+            "shredded cheddar": 113,
+            "parmesan cheese": 100,
+            "cornstarch": 128,
+            "wheat germ": 115,
+            "sourdough starter": 240,
+            "cereal flakes": 50,
+            "wheat bran": 60,
+            "cocoa powder": 85,
+            "jalapeño": 120,
+            "hot pepper sauce": 240,
+            "fruit": 140,
+            "berries": 140,
+        };
+
+        const UNIT_TO_CUPS = {
+            "cup": 1,
+            "cups": 1,
+            "tbsp": 0.0625,
+            "tablespoon": 0.0625,
+            "tablespoons": 0.0625,
+            "tsp": 0.0208333,
+            "teaspoon": 0.0208333,
+            "teaspoons": 0.0208333,
+            "oz": 0.125,
+            "ounce": 0.125,
+            "stick": 0.5,
+            "large": 0.2, // Egg approximation
+            "small": 0.1, // Small pepper approximation
+        };
+
+        const getWeight = (name, amount, unit) => {
+            const normalizedName = name.toLowerCase().split(',')[0].trim();
+            
+            if (normalizedName.includes("egg")) return Math.round(amount * 50);
+            
+            let density = 0;
+            for (const [key, val] of Object.entries(INGREDIENT_DENSITIES)) {
+                if (normalizedName.includes(key)) {
+                    density = val;
+                    break;
+                }
+            }
+
+            if (!density) return null;
+
+            const cups = amount * (UNIT_TO_CUPS[unit.toLowerCase()] || 0);
+            if (!cups) return null;
+
+            return Math.round(cups * density);
+        };
+
+        const formatOriginal = (amt, unit) => {
+            const fractionMap = { 0.25: "¼", 0.5: "½", 0.75: "¾", 0.33: "⅓", 0.66: "⅔", 0.125: "⅛" };
+            const whole = Math.floor(amt);
+            const decimal = amt - whole;
+            
+            let amtStr = amt;
+            let foundFraction = false;
+
+            Object.keys(fractionMap).forEach(key => {
+                if (Math.abs(decimal - parseFloat(key)) < 0.01 && !foundFraction) {
+                    amtStr = whole > 0 ? `${whole} ${fractionMap[key]}` : fractionMap[key];
+                    foundFraction = true;
+                }
+            });
+            
+            if (!foundFraction && whole > 0 && decimal > 0) {
+                 amtStr = `${whole} ${decimal.toFixed(2).substring(1)}`;
+            } else if (!foundFraction) {
+                amtStr = amt.toFixed(2).replace(/\.00$/, ''); // Clean up trailing zeros if exact integer
+            }
+
+            return `${amtStr} ${unit}`;
+        };
+
+        // Full Recipe Data Dump
+        const recipes = [
+            // --- WHITE PROGRAM ---
+            { id: "basic-white", title: "Basic White Bread", category: "White", desc: "The classic daily loaf. Soft, airy, and perfect for sandwiches.", sizes: { "1lb": [ { amt: 0.75, unit: "cup", name: "Water, room temperature" }, { amt: 1.5, unit: "tbsp", name: "Unsalted butter, cut into pieces" }, { amt: 1.5, unit: "tsp", name: "Granulated sugar" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 2, unit: "tbsp", name: "Nonfat dry milk" }, { amt: 0.75, unit: "tsp", name: "Yeast, active dry or instant" }, ], "1.5lb": [ { amt: 1.125, unit: "cups", name: "Water, room temperature" }, { amt: 2.33, unit: "tbsp", name: "Unsalted butter, cut into pieces" }, { amt: 2, unit: "tsp", name: "Granulated sugar" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 3, unit: "tbsp", name: "Nonfat dry milk" }, { amt: 1, unit: "tsp", name: "Yeast, active dry or instant" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Water, room temperature" }, { amt: 3, unit: "tbsp", name: "Unsalted butter, cut into pieces" }, { amt: 1, unit: "tbsp", name: "Granulated sugar" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 4, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 4, unit: "tbsp", name: "Nonfat dry milk" }, { amt: 1.5, unit: "tsp", name: "Yeast, active dry or instant" }, ] } },
+            { id: "oatmeal-bread", title: "Oatmeal Bread", category: "White", desc: "A hearty yet soft loaf with the subtle sweetness of maple syrup.", sizes: { "1lb": [ { amt: 0.75, unit: "cup", name: "Whole milk, room temperature" }, { amt: 1.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 1.5, unit: "tbsp", name: "Maple syrup (or honey)" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 0.5, unit: "cup", name: "Old-fashioned oats" }, { amt: 1.25, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 1, unit: "cup", name: "Whole milk, room temperature" }, { amt: 2, unit: "tbsp", name: "Unsalted butter" }, { amt: 2, unit: "tbsp", name: "Maple syrup (or honey)" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 0.66, unit: "cup", name: "Old-fashioned oats" }, { amt: 2, unit: "tsp", name: "Yeast" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Whole milk, room temperature" }, { amt: 2.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 2, unit: "tbsp", name: "Maple syrup (or honey)" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 3.75, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1, unit: "cup", name: "Old-fashioned oats" }, { amt: 2.25, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "cinnamon-swirl", title: "Cinnamon Swirl Bread", category: "White", desc: "Sweet breakfast bread with a cinnamon sugar filling rolled inside.", sizes: { "1lb": [ { amt: 0.75, unit: "cup", name: "Whole milk" }, { amt: 1.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "large", name: "Egg" }, { amt: 0.5, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tbsp", name: "Sugar" }, { amt: 2.25, unit: "cups", name: "All-purpose flour" }, { amt: 1.25, unit: "tsp", name: "Yeast" }, { amt: 3, unit: "tbsp", name: "Filling: Sugar" }, { amt: 1.5, unit: "tsp", name: "Filling: Cinnamon" }, ], "1.5lb": [ { amt: 1, unit: "cup", name: "Whole milk" }, { amt: 2, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "large", name: "Egg" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tbsp", name: "Sugar" }, { amt: 3.25, unit: "cups", name: "All-purpose flour" }, { amt: 2, unit: "tsp", name: "Yeast" }, { amt: 0.5, unit: "cup", name: "Filling: Sugar" }, { amt: 2, unit: "tsp", name: "Filling: Cinnamon" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Whole milk" }, { amt: 2.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "large", name: "Egg" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 1.5, unit: "tbsp", name: "Sugar" }, { amt: 4, unit: "cups", name: "All-purpose flour" }, { amt: 2, unit: "tsp", name: "Yeast" }, { amt: 0.66, unit: "cup", name: "Filling: Sugar" }, { amt: 2.5, unit: "tsp", name: "Filling: Cinnamon" }, ] } },
+            { id: "rye-bread", title: "Rye Bread", category: "White", desc: "A lighter rye loaf with caraway seeds.", sizes: { "1lb": [ { amt: 1, unit: "cup", name: "Water" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "cups", name: "All-purpose flour" }, { amt: 0.5, unit: "cup", name: "Rye flour" }, { amt: 1.5, unit: "tsp", name: "Caraway seeds (optional)" }, { amt: 2, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 1.125, unit: "cups", name: "Water" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "cups", name: "All-purpose flour" }, { amt: 0.66, unit: "cup", name: "Rye flour" }, { amt: 2, unit: "tsp", name: "Caraway seeds (optional)" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ], "2lb": [ { amt: 1.66, unit: "cups", name: "Water" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 3.33, unit: "cups", name: "All-purpose flour" }, { amt: 1.125, unit: "cups", name: "Rye flour" }, { amt: 1, unit: "tbsp", name: "Caraway seeds (optional)" }, { amt: 1, unit: "tbsp", name: "Yeast" }, ] } },
+            { id: "jalapeno-cheddar", title: "Jalapeño Cheddar Bread", category: "White", desc: "Spicy and cheesy. Add cheese/peppers at the 'Add-In' signal.", sizes: { "1lb": [ { amt: 0.75, unit: "cup", name: "Buttermilk" }, { amt: 0.5, unit: "tsp", name: "Hot pepper sauce" }, { amt: 1.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 1.5, unit: "tsp", name: "Sugar" }, { amt: 0.5, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "cups", name: "All-purpose flour" }, { amt: 0.75, unit: "tsp", name: "Yeast" }, { amt: 1, unit: "small", name: "Jalapeño, chopped" }, { amt: 0.5, unit: "cup", name: "Sharp Cheddar, shredded" }, ], "1.5lb": [ { amt: 1, unit: "cup", name: "Buttermilk" }, { amt: 0.75, unit: "tsp", name: "Hot pepper sauce" }, { amt: 3, unit: "tbsp", name: "Unsalted butter" }, { amt: 2, unit: "tsp", name: "Sugar" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "cups", name: "All-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, { amt: 2, unit: "small", name: "Jalapeños, chopped" }, { amt: 0.75, unit: "cup", name: "Sharp Cheddar, shredded" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Buttermilk" }, { amt: 1.5, unit: "tsp", name: "Hot pepper sauce" }, { amt: 2.33, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "tbsp", name: "Sugar" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 4, unit: "cups", name: "All-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, { amt: 1.5, unit: "small", name: "Jalapeños, chopped" }, { amt: 0.75, unit: "cup", name: "Sharp Cheddar, shredded" }, ] } },
+            // --- FRENCH PROGRAM ---
+            { id: "french-loaf", title: "French Bread Loaf", category: "French", desc: "Crispy crust and chewy interior. Uses the French cycle.", sizes: { "1lb": [ { amt: 1.06, unit: "cups", name: "Water, room temperature" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 2.6, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 1.5, unit: "cups", name: "Water, room temperature" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 3.5, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Water, room temperature" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 4, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "country-french", title: "Country French with Olives", category: "French", desc: "A rustic loaf with Kalamata olives and rosemary.", sizes: { "1lb": [ { amt: 0.75, unit: "cup", name: "Water" }, { amt: 1.5, unit: "tsp", name: "Olive oil" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tsp", name: "Honey" }, { amt: 2, unit: "tsp", name: "Rosemary, fresh" }, { amt: 1.25, unit: "cups", name: "All-purpose flour" }, { amt: 0.5, unit: "cup", name: "Whole-wheat flour" }, { amt: 3, unit: "tbsp", name: "Rye flour" }, { amt: 1, unit: "tsp", name: "Yeast" }, { amt: 0.5, unit: "cup", name: "Kalamata olives" }, ], "1.5lb": [ { amt: 1.125, unit: "cups", name: "Water" }, { amt: 2, unit: "tsp", name: "Olive oil" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tsp", name: "Honey" }, { amt: 1, unit: "tsp", name: "Rosemary, fresh" }, { amt: 2, unit: "cups", name: "All-purpose flour" }, { amt: 1, unit: "cup", name: "Whole-wheat flour" }, { amt: 0.33, unit: "cup", name: "Rye flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, { amt: 0.66, unit: "cup", name: "Kalamata olives" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Water" }, { amt: 1, unit: "tbsp", name: "Olive oil" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 1.5, unit: "tsp", name: "Honey" }, { amt: 1, unit: "tbsp", name: "Rosemary, fresh" }, { amt: 2.25, unit: "cups", name: "All-purpose flour" }, { amt: 1.5, unit: "cups", name: "Whole-wheat flour" }, { amt: 0.5, unit: "cup", name: "Rye flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, { amt: 0.75, unit: "cup", name: "Kalamata olives" }, ] } },
+            { id: "parmesan-peppercorn", title: "Parmesan Peppercorn Bread", category: "French", desc: "Savory loaf with a kick of black pepper.", sizes: { "1lb": [ { amt: 0.875, unit: "cup", name: "Water" }, { amt: 2, unit: "tbsp", name: "Olive oil" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 2.25, unit: "cups", name: "All-purpose flour" }, { amt: 0.5, unit: "cup", name: "Parmesan cheese, grated" }, { amt: 0.5, unit: "tsp", name: "Black pepper, ground" }, { amt: 1, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 1, unit: "cup", name: "Water" }, { amt: 3, unit: "tbsp", name: "Olive oil" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "cups", name: "All-purpose flour" }, { amt: 0.5, unit: "cup", name: "Parmesan cheese, grated" }, { amt: 1.5, unit: "tsp", name: "Black pepper, ground" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Water" }, { amt: 0.25, unit: "cup", name: "Olive oil" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 3.75, unit: "cups", name: "All-purpose flour" }, { amt: 0.75, unit: "cup", name: "Parmesan cheese, grated" }, { amt: 0.75, unit: "tsp", name: "Black pepper, ground" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "rustic-italian", title: "Rustic Italian Loaf", category: "French", desc: "Uses a bit of olive oil and wheat bran for texture.", sizes: { "1.5lb": [ { amt: 1.125, unit: "cups", name: "Water, room temperature" }, { amt: 1, unit: "tbsp", name: "Olive oil" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 0.5, unit: "tsp", name: "Sugar" }, { amt: 3, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 0.25, unit: "cup", name: "Wheat bran" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Water, room temperature" }, { amt: 1.5, unit: "tbsp", name: "Olive oil" }, { amt: 2, unit: "tsp", name: "Kosher salt" }, { amt: 0.75, unit: "tsp", name: "Sugar" }, { amt: 4, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 0.33, unit: "cup", name: "Wheat bran" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ] } },
+            // --- WHOLE WHEAT PROGRAM ---
+            { id: "basic-wheat", title: "Basic Whole-Wheat", category: "Whole Wheat", desc: "100% whole grain goodness. Use the Whole Wheat setting.", sizes: { "1lb": [ { amt: 1, unit: "cup", name: "Water, room temperature" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "tbsp", name: "Unsalted butter" }, { amt: 1.5, unit: "tbsp", name: "Granulated sugar" }, { amt: 2, unit: "cups", name: "Whole-wheat flour" }, { amt: 0.625, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1, unit: "tbsp", name: "Rye flour" }, { amt: 2, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 1.125, unit: "cups", name: "Water, room temperature" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 2.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 2, unit: "tbsp", name: "Granulated sugar" }, { amt: 2.5, unit: "cups", name: "Whole-wheat flour" }, { amt: 1.125, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 2, unit: "tbsp", name: "Rye flour" }, { amt: 2.5, unit: "tsp", name: "Yeast" }, ], "2lb": [ { amt: 1.33, unit: "cups", name: "Water, room temperature" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 1.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "tbsp", name: "Granulated sugar" }, { amt: 3.5, unit: "cups", name: "Whole-wheat flour" }, { amt: 1.125, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1.5, unit: "tbsp", name: "Rye flour" }, { amt: 1, unit: "tbsp", name: "Yeast" }, ] } },
+            { id: "multigrain-cereal", title: "Multigrain Cereal Wheat Bread", category: "Whole Wheat", desc: "Uses multigrain cereal flakes for texture and yogurt for softness.", sizes: { "1lb": [ { amt: 0.625, unit: "cup", name: "Water" }, { amt: 3, unit: "tbsp", name: "Yogurt, fat-free" }, { amt: 1.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "tbsp", name: "Brown sugar" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "cup", name: "Whole-wheat flour" }, { amt: 1, unit: "cup", name: "All-purpose flour" }, { amt: 1.33, unit: "cups", name: "Multigrain cereal flakes" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 0.93, unit: "cup", name: "Water" }, { amt: 0.33, unit: "cup", name: "Yogurt, fat-free" }, { amt: 2, unit: "tbsp", name: "Unsalted butter" }, { amt: 4, unit: "tsp", name: "Brown sugar" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 1.5, unit: "cups", name: "Whole-wheat flour" }, { amt: 1.5, unit: "cups", name: "All-purpose flour" }, { amt: 2, unit: "cups", name: "Multigrain cereal flakes" }, { amt: 2, unit: "tsp", name: "Yeast" }, ], "2lb": [ { amt: 1.5, unit: "cups", name: "Water" }, { amt: 0.33, unit: "cup", name: "Yogurt, fat-free" }, { amt: 3, unit: "tbsp", name: "Unsalted butter" }, { amt: 2, unit: "tbsp", name: "Brown sugar" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "cups", name: "Whole-wheat flour" }, { amt: 2, unit: "cups", name: "All-purpose flour" }, { amt: 2.66, unit: "cups", name: "Multigrain cereal flakes" }, { amt: 2.5, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "nutty-wheat", title: "Nutty Whole-Wheat Bread", category: "Whole Wheat", desc: "Packed with nuts and seeds.", sizes: { "1lb": [ { amt: 1.125, unit: "cups", name: "Buttermilk, low-fat" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "tbsp", name: "Maple syrup" }, { amt: 1.5, unit: "cups", name: "Whole-wheat flour" }, { amt: 1, unit: "cup", name: "All-purpose flour" }, { amt: 2, unit: "tsp", name: "Yeast" }, { amt: 0.33, unit: "cup", name: "Mixed nuts and seeds" }, ], "1.5lb": [ { amt: 1.5, unit: "cups", name: "Buttermilk, low-fat" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 1.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 1.5, unit: "tbsp", name: "Maple syrup" }, { amt: 2, unit: "cups", name: "Whole-wheat flour" }, { amt: 1.5, unit: "cups", name: "All-purpose flour" }, { amt: 1, unit: "tbsp", name: "Yeast" }, { amt: 0.66, unit: "cup", name: "Mixed nuts and seeds" }, ], "2lb": [ { amt: 1, unit: "cup", name: "Buttermilk, low-fat" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "tbsp", name: "Maple syrup" }, { amt: 2.5, unit: "cups", name: "Whole-wheat flour" }, { amt: 0.5, unit: "cup", name: "All-purpose flour" }, { amt: 2.5, unit: "tsp", name: "Yeast" }, { amt: 0.75, unit: "cup", name: "Mixed nuts and seeds" }, ] } },
+            { id: "wheat-bran", title: "Wheat Bran Bread", category: "Whole Wheat", desc: "High fiber loaf with oats and bran.", sizes: { "1lb": [ { amt: 1, unit: "cup", name: "Water" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "tbsp", name: "Molasses" }, { amt: 1.5, unit: "cups", name: "Whole-wheat flour" }, { amt: 0.75, unit: "cup", name: "All-purpose flour" }, { amt: 0.33, unit: "cup", name: "Oats" }, { amt: 0.33, unit: "cup", name: "Wheat bran" }, { amt: 2, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 1.5, unit: "cups", name: "Water" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 1.5, unit: "tbsp", name: "Unsalted butter" }, { amt: 2, unit: "tbsp", name: "Molasses" }, { amt: 2, unit: "cups", name: "Whole-wheat flour" }, { amt: 1.5, unit: "cups", name: "All-purpose flour" }, { amt: 0.5, unit: "cup", name: "Oats" }, { amt: 0.5, unit: "cup", name: "Wheat bran" }, { amt: 1, unit: "tbsp", name: "Yeast" }, ], "2lb": [ { amt: 1.125, unit: "cups", name: "Water" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tbsp", name: "Unsalted butter" }, { amt: 1.5, unit: "tbsp", name: "Molasses" }, { amt: 2.5, unit: "cups", name: "Whole-wheat flour" }, { amt: 1, unit: "cup", name: "All-purpose flour" }, { amt: 0.625, unit: "cup", name: "Oats" }, { amt: 0.625, unit: "cup", name: "Wheat bran" }, { amt: 2.5, unit: "tsp", name: "Yeast" }, ] } },
+            // --- SWEET PROGRAM ---
+            { id: "brioche", title: "Brioche Loaf", category: "Sweet", desc: "Rich, buttery, and eggy. The ultimate French breakfast bread.", sizes: { "1lb": [ { amt: 0.33, unit: "cup", name: "Whole milk, room temperature" }, { amt: 4, unit: "tbsp", name: "Unsalted butter, cut into pieces" }, { amt: 2, unit: "large", name: "Eggs, room temperature" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tbsp", name: "Sugar" }, { amt: 1, unit: "tbsp", name: "Nonfat powdered milk" }, { amt: 2, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 0.5, unit: "cup", name: "Whole milk, room temperature" }, { amt: 6, unit: "tbsp", name: "Unsalted butter, cut into pieces" }, { amt: 3, unit: "large", name: "Eggs, room temperature" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 1.5, unit: "tbsp", name: "Sugar" }, { amt: 1.5, unit: "tbsp", name: "Nonfat powdered milk" }, { amt: 2.8, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 2.25, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "panettone", title: "Panettone Loaf", category: "Sweet", desc: "Italian holiday bread. Add fruit at the signal.", sizes: { "1lb": [ { amt: 0.5, unit: "cup", name: "Whole milk" }, { amt: 2, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "large", name: "Egg" }, { amt: 0.5, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "tbsp", name: "Sugar" }, { amt: 2, unit: "cups", name: "All-purpose flour" }, { amt: 2, unit: "tsp", name: "Orange zest, grated" }, { amt: 0.5, unit: "tsp", name: "Anise seed" }, { amt: 0.25, unit: "tsp", name: "Nutmeg" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, { amt: 0.5, unit: "cup", name: "Mixed dried fruit" }, ], "1.5lb": [ { amt: 0.66, unit: "cup", name: "Whole milk" }, { amt: 4, unit: "tbsp", name: "Unsalted butter" }, { amt: 2, unit: "large", name: "Eggs" }, { amt: 0.5, unit: "tsp", name: "Kosher salt" }, { amt: 0.33, unit: "cup", name: "Sugar" }, { amt: 2.66, unit: "cups", name: "All-purpose flour" }, { amt: 1, unit: "tbsp", name: "Orange zest, grated" }, { amt: 1, unit: "tsp", name: "Anise seed" }, { amt: 0.5, unit: "tsp", name: "Nutmeg" }, { amt: 2, unit: "tsp", name: "Yeast" }, { amt: 0.66, unit: "cup", name: "Mixed dried fruit" }, ] } },
+            { id: "chocolate-cherry", title: "Chocolate Cherry Loaf", category: "Sweet", desc: "Decadent loaf with dark chocolate and cherries.", sizes: { "1lb": [ { amt: 0.5, unit: "cup", name: "Whole milk" }, { amt: 3, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "large", name: "Egg" }, { amt: 0.5, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "tbsp", name: "Sugar" }, { amt: 2.25, unit: "cups", name: "All-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, { amt: 0.5, unit: "cup", name: "Bittersweet chocolate, chopped" }, { amt: 0.33, unit: "cup", name: "Dried cherries" }, ], "1.5lb": [ { amt: 0.75, unit: "cup", name: "Whole milk" }, { amt: 0.25, unit: "cup", name: "Unsalted butter" }, { amt: 2, unit: "large", name: "Eggs" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "tbsp", name: "Sugar" }, { amt: 3, unit: "cups", name: "All-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, { amt: 0.66, unit: "cup", name: "Bittersweet chocolate, chopped" }, { amt: 0.5, unit: "cup", name: "Dried cherries" }, ] } },
+            { id: "babka", title: "Babka", category: "Sweet", desc: "A rolled dough with rich cocoa cinnamon filling. Roll manually after kneading.", sizes: { "1lb": [ { amt: 0.5, unit: "cup", name: "Whole milk" }, { amt: 3, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "large", name: "Egg" }, { amt: 0.5, unit: "tsp", name: "Vanilla" }, { amt: 2, unit: "tbsp", name: "Sugar" }, { amt: 0.5, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "cups", name: "All-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, { amt: 3, unit: "tbsp", name: "Filling: Sugar" }, { amt: 1.5, unit: "tsp", name: "Filling: Cinnamon" }, { amt: 2, unit: "tsp", name: "Filling: Cocoa powder" }, ], "1.5lb": [ { amt: 0.75, unit: "cup", name: "Whole milk" }, { amt: 4, unit: "tbsp", name: "Unsalted butter" }, { amt: 2, unit: "large", name: "Eggs" }, { amt: 1, unit: "tsp", name: "Vanilla" }, { amt: 3, unit: "tbsp", name: "Sugar" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "cups", name: "All-purpose flour" }, { amt: 2, unit: "tsp", name: "Yeast" }, { amt: 0.5, unit: "cup", name: "Filling: Sugar" }, { amt: 2, unit: "tsp", name: "Filling: Cinnamon" }, { amt: 1, unit: "tbsp", name: "Filling: Cocoa powder" }, ] } },
+            { id: "challah", title: "Challah Loaf", category: "Sweet", desc: "Traditional egg bread, slightly sweet with a beautiful golden crumb.", sizes: { "1lb": [ { amt: 0.5, unit: "cup", name: "Water, room temperature" }, { amt: 4, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "large", name: "Egg" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 2.5, unit: "tbsp", name: "Sugar" }, { amt: 2.5, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ], "1.5lb": [ { amt: 0.75, unit: "cup", name: "Water, room temperature" }, { amt: 5, unit: "tbsp", name: "Unsalted butter" }, { amt: 1, unit: "large", name: "Egg" }, { amt: 1, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "tbsp", name: "Sugar" }, { amt: 3, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ] } },
+            // --- GLUTEN FREE PROGRAM ---
+            { id: "gf-sandwich", title: "Gluten-Free Sandwich Bread", category: "Gluten Free", desc: "Requires a GF setting. Uses All-Purpose GF Blend.", sizes: { "1.5lb": [ { amt: 1.75, unit: "cups", name: "Water, room temperature" }, { amt: 4, unit: "tbsp", name: "Unsalted butter" }, { amt: 3, unit: "large", name: "Eggs" }, { amt: 1.75, unit: "tsp", name: "Kosher salt" }, { amt: 3, unit: "tbsp", name: "Sugar" }, { amt: 3.25, unit: "cups", name: "Gluten-free, all-purpose flour blend" }, { amt: 3, unit: "tbsp", name: "Psyllium husk powder (essential)" }, { amt: 2.25, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "gf-pizza", title: "Gluten-Free Pizza Dough", category: "Gluten Free", desc: "Makes enough for two 12-inch round pizzas.", sizes: { "2lb": [ { amt: 1.25, unit: "cups", name: "Water, room temperature" }, { amt: 0.25, unit: "cup", name: "Olive oil" }, { amt: 2, unit: "tsp", name: "Sugar" }, { amt: 2, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "cup", name: "Brown rice flour" }, { amt: 1, unit: "cup", name: "White rice flour" }, { amt: 0.5, unit: "cup", name: "Arrowroot flour" }, { amt: 0.33, unit: "cup", name: "Ground flax seeds" }, { amt: 0.25, unit: "cup", name: "Quinoa flour" }, { amt: 0.25, unit: "cup", name: "Tapioca flour" }, { amt: 3, unit: "tbsp", name: "Psyllium husk powder" }, { amt: 2.5, unit: "tsp", name: "Baking powder" }, { amt: 1, unit: "tsp", name: "Yeast" }, ] } },
+            // --- ARTISAN DOUGH & DOUGH PROGRAMS ---
+            { id: "sourdough", title: "Sourdough Loaf/Boule", category: "Dough", desc: "Requires active sourdough starter. Use Artisan Dough program.", sizes: { "1.5lb": [ { amt: 3, unit: "tbsp", name: "Water, cool" }, { amt: 2, unit: "cups", name: "Sourdough starter (active)" }, { amt: 2.5, unit: "cups", name: "Bread flour" }, { amt: 1, unit: "tsp", name: "Sugar" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 2, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "ciabatta", title: "Ciabatta", category: "Dough", desc: "Italian slipper bread. Uses a sponge method.", sizes: { "1.5lb": [ { amt: 0.06, unit: "tsp", name: "Sponge: Yeast (pinch)" }, { amt: 0.33, unit: "cup", name: "Sponge: Water" }, { amt: 0.66, unit: "cup", name: "Sponge: Bread flour" }, { amt: 0.66, unit: "cup", name: "Dough: Water, cool" }, { amt: 3, unit: "tbsp", name: "Dough: Olive oil" }, { amt: 2.5, unit: "cups", name: "Dough: Bread flour" }, { amt: 1.5, unit: "tsp", name: "Dough: Kosher salt" }, { amt: 2, unit: "tsp", name: "Dough: Yeast" }, ] } },
+            { id: "pizza-dough", title: "Pizza Dough", category: "Dough", desc: "Standard pizza dough for the Dough cycle. Finish in oven.", sizes: { "1.5lb": [ { amt: 1, unit: "cup", name: "Water, room temperature" }, { amt: 1, unit: "tsp", name: "Honey" }, { amt: 1, unit: "tbsp", name: "Olive oil" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 2.6, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 0.56, unit: "cups", name: "Whole-wheat flour" }, { amt: 1.75, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "french-baguettes", title: "French Baguettes", category: "Dough", desc: "Classic crunchy baguettes. Shape and bake in oven.", sizes: { "1.5lb": [ { amt: 1.125, unit: "cups", name: "Water" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 0.5, unit: "tsp", name: "Sugar" }, { amt: 3, unit: "cups", name: "Bread flour" }, { amt: 2, unit: "tbsp", name: "Wheat germ" }, { amt: 1.75, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "cinnamon-rolls", title: "Cinnamon Swirl Rolls", category: "Dough", desc: "Rich dough for 16 cinnamon rolls.", sizes: { "1.5lb": [ { amt: 0.5, unit: "cup", name: "Low-fat milk" }, { amt: 2, unit: "large", name: "Eggs" }, { amt: 4, unit: "tbsp", name: "Unsalted butter" }, { amt: 0.5, unit: "cup", name: "Sugar" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "tsp", name: "Vanilla" }, { amt: 3, unit: "cups", name: "Bread flour" }, { amt: 0.5, unit: "cup", name: "Cornstarch" }, { amt: 1.75, unit: "tsp", name: "Yeast" }, { amt: 0.66, unit: "cup", name: "Filling: Brown sugar" }, { amt: 3, unit: "tbsp", name: "Filling: Sugar" }, { amt: 2, unit: "tsp", name: "Filling: Cinnamon" }, ] } },
+            { id: "pretzels", title: "Soft Pretzels", category: "Dough", desc: "Dough cycle. Boil with baking soda then bake.", sizes: { "1.5lb": [ { amt: 1, unit: "cup", name: "Water" }, { amt: 1, unit: "tbsp", name: "Brown sugar" }, { amt: 2, unit: "tsp", name: "Kosher salt" }, { amt: 3.25, unit: "cups", name: "Bread flour" }, { amt: 2.25, unit: "tsp", name: "Yeast" }, ] } },
+            { id: "focaccia", title: "Herb Focaccia", category: "Dough", desc: "Rich olive oil dough with herbs. Makes a 12x8 inch loaf.", sizes: { "1.5lb": [ { amt: 1.125, unit: "cup", name: "Water" }, { amt: 2.33, unit: "tbsp", name: "Olive oil" }, { amt: 2.25, unit: "tsp", name: "Italian herb blend" }, { amt: 1.5, unit: "tsp", name: "Kosher salt" }, { amt: 3.18, unit: "cups", name: "Bread flour" }, { amt: 1.5, unit: "tsp", name: "Yeast" }, ] } },
+            // --- CAKE PROGRAM ---
+            { id: "sour-cream-choc", title: "Sour Cream Chocolate Bread", category: "Cake", desc: "A rich, cake-like chocolate bread. Use CAKE program.", sizes: { "1.5lb": [ { amt: 0.56, unit: "cup", name: "Low-fat milk" }, { amt: 0.5, unit: "cup", name: "Sour cream" }, { amt: 2, unit: "large", name: "Eggs" }, { amt: 0.75, unit: "tsp", name: "Vanilla" }, { amt: 0.5, unit: "cup", name: "Sugar" }, { amt: 0.33, unit: "cup", name: "Brown sugar" }, { amt: 1.75, unit: "cups", name: "All-purpose flour" }, { amt: 0.75, unit: "tsp", name: "Baking powder" }, { amt: 0.5, unit: "tsp", name: "Baking soda" }, { amt: 0.5, unit: "tsp", name: "Kosher salt" }, { amt: 0.75, unit: "cup", name: "Chocolate chips" }, { amt: 0.5, unit: "cup", name: "Walnuts" }, ] } },
+            { id: "banana-bread", title: "Banana Walnut Bread", category: "Cake", desc: "Uses baking powder/soda instead of yeast. Use CAKE program.", sizes: { "2lb": [ { amt: 0.5, unit: "cup", name: "Low-fat buttermilk" }, { amt: 0.5, unit: "cup", name: "Unsalted butter" }, { amt: 2, unit: "large", name: "Eggs" }, { amt: 1, unit: "tsp", name: "Vanilla extract" }, { amt: 1.75, unit: "cups", name: "Mashed ripe bananas" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 1, unit: "cup", name: "Granulated sugar" }, { amt: 2, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 1, unit: "tsp", name: "Baking soda" }, { amt: 0.75, unit: "tsp", name: "Baking powder" }, { amt: 0.66, unit: "cup", name: "Chopped walnuts" }, ] } },
+            { id: "zucchini-bread", title: "Zucchini Bread", category: "Cake", desc: "Moist, spiced quick bread. Use CAKE program.", sizes: { "1.5lb": [ { amt: 0.33, unit: "cup", name: "Vegetable oil" }, { amt: 2, unit: "large", name: "Eggs" }, { amt: 0.33, unit: "cup", name: "Brown sugar" }, { amt: 3, unit: "tbsp", name: "Granulated sugar" }, { amt: 1.5, unit: "cups", name: "Unbleached, all-purpose flour" }, { amt: 0.75, unit: "cup", name: "Shredded zucchini" }, { amt: 0.75, unit: "tsp", name: "Kosher salt" }, { amt: 0.75, unit: "tsp", name: "Cinnamon" }, { amt: 0.5, unit: "tsp", name: "Baking soda" }, { amt: 0.5, unit: "tsp", name: "Baking powder" }, { amt: 0.33, unit: "cup", name: "Walnuts" }, { amt: 0.33, unit: "cup", name: "Raisins" }, ] } }
+        ];
+
+        // --- GLOBAL STATE ---
+        let state = {
+            selectedCategory: 'All',
+            searchTerm: '',
+            useMetric: true,
+            // selectedSize and sizeMap will be handled per recipe card
+        };
+
+        // --- DOM MANIPULATION & RENDERING ---
+        
+        const getIconSvg = (category) => {
+            const icons = {
+                "White": `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 2v20M5 5l14 14M5 19l14-14"/></svg>`, // Wheat
+                "French": `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 13V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v7"/><path d="M20 21H4"/></svg>`, // Bread Icon
+                "Whole Wheat": `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 7.5L12 2L3 7.5V16.5L12 22L21 16.5V7.5Z"/><path d="M3 7.5L12 13L21 7.5"/></svg>`, // Grain
+                "Sweet": `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 18v-6"/><path d="M15 10l-3 3-3-3"/></svg>`, // Cookie
+                "Gluten Free": `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-green-500"><path d="M12 2v20M5 5l14 14M5 19l14-14"/></svg>`,
+                "Dough": `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 14c.82 0 1.5.68 1.5 1.5v3c0 .82-.68 1.5-1.5 1.5H3c-.82 0-1.5-.68-1.5-1.5v-3c0-.82.68-1.5 1.5-1.5"/><path d="M15 14v1.5a1.5 1.5 0 0 1-3 0V14"/><path d="M9 14v1.5a1.5 1.5 0 0 1-3 0V14"/><path d="M21 14H3v-2.5c0-.82.68-1.5 1.5-1.5h15c.82 0 1.5.68 1.5 1.5V14Z"/><path d="M12 11V6a3 3 0 0 0-3-3H6"/></svg>`, // Candy/Dough
+                "Cake": `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 20V10M18 20V4M6 20V16"/></svg>`, // Cake/Bar
+                "All": `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V5H6.5A2.5 2.5 0 0 0 4 7.5v12Z"/><path d="M12 11h6"/><path d="M12 15h6"/></svg>`, // Book Open
+            };
+            return icons[category] || icons['All'];
+        };
+
+        const renderSidebar = () => {
+            const categories = ["All", "White", "French", "Whole Wheat", "Sweet", "Gluten Free", "Dough", "Cake"];
+            const listElement = document.getElementById('category-list');
+            listElement.innerHTML = categories.map(cat => `
+                <button
+                    data-category="${cat}"
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${state.selectedCategory === cat ? 'bg-orange-100 text-orange-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}"
+                    onclick="handleCategorySelect('${cat}')"
+                >
+                    ${getIconSvg(cat)}
+                    ${cat}
+                </button>
+            `).join('');
+        };
+        
+        const renderIngredientsTable = (ingredients, useMetric) => {
+            if (!ingredients || ingredients.length === 0) return '';
+
+            const rows = ingredients.map((ing, idx) => {
+                const gramWeight = getWeight(ing.name, ing.amt, ing.unit);
+                const displayAmt = useMetric && gramWeight !== null ? `${gramWeight}g` : formatOriginal(ing.amt, ing.unit);
+                const isConverted = useMetric && gramWeight !== null;
+
+                const originalDisplay = formatOriginal(ing.amt, ing.unit);
+
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-4 py-3 font-mono text-slate-700 font-medium whitespace-nowrap">
+                            ${displayAmt}
+                        </td>
+                        <td class="px-4 py-3 text-slate-700">
+                            ${ing.name}
+                            ${isConverted ? `<span class="ml-2 inline-block text-[10px] text-slate-400 bg-slate-100 px-1.5 rounded">${originalDisplay}</span>` : ''}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            return `
+                <div class="bg-white rounded-lg border border-slate-200 overflow-x-auto">
+                    <table class="w-full min-w-[300px]">
+                        <thead class="bg-slate-50 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                            <tr>
+                                <th class="px-4 py-3 w-1/3">Amount</th>
+                                <th class="px-4 py-3">Ingredient</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            ${rows}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        };
+
+        const renderRecipeCard = (recipe) => {
+            const cardId = `recipe-${recipe.id}`;
+            const cardElement = document.getElementById(cardId) || document.createElement('div');
+            cardElement.id = cardId;
+            cardElement.className = "bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6";
+            
+            // Get state for this specific card
+            let cardState = JSON.parse(localStorage.getItem(cardId)) || { selectedSize: Object.keys(recipe.sizes)[0], useMetric: true };
+            
+            const availableSizes = Object.keys(recipe.sizes);
+            const currentIngredients = recipe.sizes[cardState.selectedSize] || [];
+
+            const sizeSelectors = ["1lb", "1.5lb", "2lb"].map(size => {
+                const isAvailable = availableSizes.includes(size);
+                const isSelected = cardState.selectedSize === size;
+                
+                return `
+                    <button
+                        ${isAvailable ? '' : 'disabled'}
+                        onclick="handleSizeSelect('${recipe.id}', '${size}')"
+                        class="flex-1 py-2 px-4 rounded-lg border text-sm font-medium transition-all
+                            ${isSelected 
+                                ? 'bg-blue-50 border-blue-200 text-blue-700 ring-1 ring-blue-200' 
+                                : isAvailable 
+                                    ? 'bg-white border-slate-200 text-slate-600 hover:border-slate-300' 
+                                    : 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed'
+                            }"
+                    >
+                        ${size}
+                    </button>
+                `;
+            }).join('');
+
+            cardElement.innerHTML = `
+                <div class="p-6 border-b border-slate-100 bg-slate-50">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 bg-slate-200 text-slate-700 text-xs font-semibold rounded-full uppercase tracking-wider">${recipe.category}</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800">${recipe.title}</h2>
+                            <p class="text-slate-600 text-sm mt-1">${recipe.desc}</p>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 bg-white p-1 rounded-lg border border-slate-200 shadow-sm">
+                            <button 
+                                onclick="handleMetricToggle('${recipe.id}', false)"
+                                class="px-3 py-1.5 text-sm font-medium rounded-md transition-all ${!cardState.useMetric ? 'bg-orange-500 text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'}"
+                            >
+                                Cups
+                            </button>
+                            <button 
+                                onclick="handleMetricToggle('${recipe.id}', true)"
+                                class="px-3 py-1.5 text-sm font-medium rounded-md transition-all ${cardState.useMetric ? 'bg-orange-500 text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'}"
+                            >
+                                Grams
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <!-- Size Selector -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-slate-500 mb-2 uppercase tracking-wide">Loaf Size</label>
+                        <div class="flex gap-2">
+                            ${sizeSelectors}
+                        </div>
+                    </div>
+
+                    <!-- Ingredients Table -->
+                    ${renderIngredientsTable(currentIngredients, cardState.useMetric)}
+                    
+                    <div class="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-100 flex gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-orange-400 flex-shrink-0"><path d="m7.5 4.5 9 7.5-9 7.5V4.5Z"/></svg>
+                        <p class="text-sm text-orange-800">
+                            <strong>Order matters!</strong> Always add liquids first, dry ingredients second, and yeast last. Ensure yeast does not touch salt or liquids directly if using delay timer.
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            return cardElement;
+        };
+
+        const renderRecipeList = () => {
+            const listElement = document.getElementById('recipe-list');
+            const { selectedCategory, searchTerm } = state;
+
+            const filteredRecipes = recipes.filter(r => {
+                const matchesCategory = selectedCategory === "All" || r.category === selectedCategory;
+                const matchesSearch = r.title.toLowerCase().includes(searchTerm.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+            
+            // Clear existing list
+            listElement.innerHTML = '';
+
+            if (filteredRecipes.length > 0) {
+                filteredRecipes.forEach(recipe => {
+                    listElement.appendChild(renderRecipeCard(recipe));
+                });
+            } else {
+                listElement.innerHTML = `
+                    <div class="text-center py-12 text-slate-500">
+                        <p class="text-lg">No recipes found matching your criteria.</p>
+                        <button onclick="handleClearFilters()" class="mt-2 text-orange-500 hover:underline">Clear filters</button>
+                    </div>
+                `;
+            }
+        };
+
+        // --- HANDLERS (Must be globally accessible) ---
+
+        window.handleCategorySelect = (category) => {
+            state.selectedCategory = category;
+            renderSidebar();
+            renderRecipeList();
+            // Close sidebar on mobile after selection
+            if (window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+                document.getElementById('sidebar-overlay').classList.add('hidden');
+            }
+        };
+
+        window.handleClearFilters = () => {
+            state.selectedCategory = 'All';
+            state.searchTerm = '';
+            document.getElementById('search-input').value = '';
+            renderSidebar();
+            renderRecipeList();
+        };
+
+        window.handleMetricToggle = (recipeId, useMetric) => {
+            const cardId = `recipe-${recipeId}`;
+            let cardState = JSON.parse(localStorage.getItem(cardId)) || { selectedSize: Object.keys(recipes.find(r => r.id === recipeId).sizes)[0], useMetric: true };
+            
+            cardState.useMetric = useMetric;
+            localStorage.setItem(cardId, JSON.stringify(cardState));
+            
+            // Re-render only the affected card
+            const recipe = recipes.find(r => r.id === recipeId);
+            const listElement = document.getElementById('recipe-list');
+            const oldCard = document.getElementById(cardId);
+            if (oldCard) {
+                listElement.replaceChild(renderRecipeCard(recipe), oldCard);
+            }
+        };
+
+        window.handleSizeSelect = (recipeId, size) => {
+            const cardId = `recipe-${recipeId}`;
+            let cardState = JSON.parse(localStorage.getItem(cardId)) || { useMetric: true };
+            
+            cardState.selectedSize = size;
+            localStorage.setItem(cardId, JSON.stringify(cardState));
+
+            // Re-render only the affected card
+            const recipe = recipes.find(r => r.id === recipeId);
+            const listElement = document.getElementById('recipe-list');
+            const oldCard = document.getElementById(cardId);
+            if (oldCard) {
+                listElement.replaceChild(renderRecipeCard(recipe), oldCard);
+            }
+        };
+
+        // --- INITIALIZATION ---
+
+        const init = () => {
+            // 1. Initial Render
+            renderSidebar();
+            renderRecipeList();
+
+            // 2. Set up event listeners
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                state.searchTerm = e.target.value;
+                renderRecipeList();
+            });
+
+            // Mobile Menu Toggle Logic
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            });
+
+            sidebarCloseBtn.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        };
+
+        // Run initialization when the document is ready
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
