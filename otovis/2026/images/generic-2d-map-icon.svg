@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Generic 2D map icon</title>
+  <desc id="desc">A simple abstract map with route pins and connecting paths.</desc>
+  <rect width="800" height="500" rx="24" fill="#f2f6f7"/>
+  <path d="M78 112c54-24 106-36 158-36 58 0 112 16 166 32 52 16 104 32 160 32 52 0 105-14 160-42v292c-55 28-108 42-160 42-56 0-108-16-160-32-54-16-108-32-166-32-52 0-104 12-158 36z" fill="#ffffff" stroke="#b7c8cd" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M268 82v292M520 136v292" fill="none" stroke="#d5e1e4" stroke-width="8"/>
+  <path d="M164 316c54-78 112-112 174-102 70 12 80 92 150 104 54 10 104-26 150-92" fill="none" stroke="#51c0d3" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 34"/>
+  <g fill="#222222">
+    <path d="M168 195c0-41 33-74 74-74s74 33 74 74c0 54-74 130-74 130s-74-76-74-130z"/>
+    <circle cx="242" cy="195" r="27" fill="#ffffff"/>
+    <path d="M510 224c0-37 30-67 67-67s67 30 67 67c0 49-67 118-67 118s-67-69-67-118z"/>
+    <circle cx="577" cy="224" r="24" fill="#ffffff"/>
+  </g>
+  <path d="M114 108v292M688 110v292" fill="none" stroke="#e3ecee" stroke-width="8" stroke-linecap="round"/>
+</svg>
