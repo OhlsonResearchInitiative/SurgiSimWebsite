@@ -44,6 +44,23 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  /* ---------------- hero slideshow ---------------- */
+  // crossfade between the hero photos; holds still for reduced motion, offscreen or in a background tab
+  const slides = [...document.querySelectorAll('#heroSlides img')];
+  if (slides.length > 1 && !reduceMotion) {
+    let current = 0, heroVisible = true;
+    setInterval(() => {
+      if (!heroVisible || document.hidden) return;
+      slides[current].classList.remove('is-active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('is-active');
+      slides[current].removeAttribute('aria-hidden');
+    }, 6000);
+    new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; })
+      .observe(document.getElementById('heroSlides'));
+  }
+
   /* ------------- pause animations offscreen ------------- */
   const vis = new IntersectionObserver(entries => {
     entries.forEach(e => {
