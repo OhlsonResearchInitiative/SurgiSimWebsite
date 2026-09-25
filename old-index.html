@@ -1,0 +1,174 @@
+<html>
+  <head>
+  	<meta http-equiv="refresh" content="0; URL=https://www.surgisim.ca/otovis/" />
+  	<meta charset="utf-8">
+  	<link rel="stylesheet" href="css/style.css">
+  	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <title>SurgiSim</title>
+  </head>
+  <body>
+
+  	<div id="content">
+  		
+  		<img id="logo" src="images/SurgiSim logo.png">
+  		<h4>Enabling surgeons to perform the best surgery</h4>
+
+<!--   		<h2 style="margin-top: 80;">SurgiSim beta 1.0 is now available to download!</h2>
+  		<br>
+  		<br>
+  		<button id="bt_download"></button> -->
+<!--   		<br>
+  		<h4>Windows Installer | 658 MB | <button id="bt_info"><u>info</u></button> | <button id="bt_info" ><a id="bt_info" href="help/index.html">Help Center</a></button> | <button id="bt_info" ><a id="bt_info" href="feedback/index.html">Give Feedback</a></button></h4> -->
+
+	<!-- The Modal Info -->
+			<div id="info" class="modal">
+
+			  <!-- Modal content -->
+			  <div class="modal-content">
+			    <span class="close">&times;</span>
+			    <h3 style="font-weight: 1000; color: #4c4c4c;">System requirements</h3>
+
+			    <p><b>Recommended</b></p>
+
+			    <p>
+			    Requires a 64-bit processor and operating system
+			    <br>
+			    OS: Windows 10 (64-Bit versions)
+			    <br>
+			    Processor: intel(r) Core™ i7 6700k or better
+			    <br>
+				RAM: 16GB
+				<br>
+				GPU: NVIDIA GeForce RTX 3070
+				<br>
+				Displays: Oculus Rift S or Oculus Quest 2
+				<br>
+				Haptic device: Geomagic Touch Haptic (20% Education discount available at <a target="_blank" href="https://www.rapid3d.ca"> rapid3d.ca)</a>
+				</p>
+
+			  </div>
+
+			</div>
+
+	<!-- The Modal Download -->
+			<div id="download" class="modal">
+
+			  <!-- Modal content -->
+			  <div style="text-align: center; display: block;" class="modal-content">
+			    <span class="close2">&times;</span>
+			    <h3 style="font-weight: 1000; color: #4c4c4c;">Download SurgiSim Installer</h3>
+
+			    	<div style="margin: 0 auto;">
+			    		
+					<form id="form" action="https://formspree.io/f/mqkwdqeq" method="POST">
+						<div >
+							<label style="font-size: 20px;">
+						    Your email:
+						    <input style="font-size: 20px;" type="email" placeholder="me@example.com" name="_replyto" required>
+					  		</label>
+						</div>
+						<br>
+						<br>
+						<div>
+							<a  id="downloadSS"><button type="button" id="bt_download"></button></a>
+						</div>
+
+					</form>
+
+			    	</div>
+					
+
+					<script type="text/javascript">
+
+						function validateEmail(elementValue){      
+						   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+						   return emailPattern.test(elementValue); 
+						 } 
+
+
+						function checkform(form) {
+					    // get all the inputs within the submitted form
+					    var inputs = form.getElementsByTagName('input');
+					    for (var i = 0; i < inputs.length; i++) {
+					        // only validate the inputs that have the required attribute
+					        if(inputs[i].hasAttribute("required")){
+					            if(inputs[i].value == ""){
+					                // found an empty field that is required
+					                alert("Please enter your email address");
+					                return false;
+					            }else{
+					            	if (i==0) {
+
+					            		if(validateEmail(inputs[i].value) == false){
+
+					            			alert("Invalid email!");
+					            			return false;
+					            		}
+					            	}
+					            }
+					        }
+					    }
+					    return true;
+					}
+					
+						var downloadSS = document.getElementById('downloadSS');
+						var form = document.getElementById('form');
+						downloadSS.onclick = function() {
+							
+							 if (checkform(form) == false){
+							 }else{
+							 	
+							 	window.open("https://www.dropbox.com/s/dvdfxrifqh9hdyz/SurgiSim_Win64_2021-07-13.exe?dl=0", "_blank");
+							 	document.getElementById("form").submit();
+							 }
+						}
+
+					</script>
+
+			  </div>
+
+			</div>
+	  	</div>
+
+  	<div id="footer">
+  		
+  		<h4>Copyright © 2021 | The University of Calgary | Stanford University | Western University</h4>
+
+  	</div>
+
+<script>
+	var info = document.getElementById("info");
+	var btn = document.getElementById("bt_info");
+	var span = document.getElementsByClassName("close")[0];
+	btn.onclick = function() {
+	  info.style.display = "block";
+	}
+	span.onclick = function() {
+	  info.style.display = "none";
+	}
+	window.onclick = function(event) {
+	  if (event.target == info) {
+	    info.style.display = "none";
+	  }
+	}
+</script>
+
+<script>
+	var download = document.getElementById("download");
+	var btn = document.getElementById("bt_download");
+	var span2 = document.getElementsByClassName("close2")[0];
+	btn.onclick = function() {
+	  download.style.display = "block";
+	}
+	span2.onclick = function() {
+	  download.style.display = "none";
+	}
+	window.onclick = function(event) {
+	  if (event.target == info) {
+	    download.style.display = "none";
+	  }
+	}
+</script>
+
+  </body>
+</html>

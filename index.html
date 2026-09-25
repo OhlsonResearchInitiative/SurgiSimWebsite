@@ -1,174 +1,384 @@
-<html>
-  <head>
-  	<meta http-equiv="refresh" content="0; URL=https://www.surgisim.ca/otovis/" />
-  	<meta charset="utf-8">
-  	<link rel="stylesheet" href="css/style.css">
-  	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-  <title>SurgiSim</title>
-  </head>
-  <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SurgiSim | Patient-specific surgical simulation</title>
+  <meta name="description" content="SurgiSim is a patient-specific surgical simulation platform for Otolaryngology – Head & Neck Surgery, from the University of Calgary's Ohlson Research Initiative.">
+  <meta name="theme-color" content="#f4f8f8">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=28">
+</head>
+<body>
 
-  	<div id="content">
-  		
-  		<img id="logo" src="images/SurgiSim logo.png">
-  		<h4>Enabling surgeons to perform the best surgery</h4>
+  <!-- Ambient light behind the glass -->
+  <div class="ambient" aria-hidden="true">
+  </div>
 
-<!--   		<h2 style="margin-top: 80;">SurgiSim beta 1.0 is now available to download!</h2>
-  		<br>
-  		<br>
-  		<button id="bt_download"></button> -->
-<!--   		<br>
-  		<h4>Windows Installer | 658 MB | <button id="bt_info"><u>info</u></button> | <button id="bt_info" ><a id="bt_info" href="help/index.html">Help Center</a></button> | <button id="bt_info" ><a id="bt_info" href="feedback/index.html">Give Feedback</a></button></h4> -->
+  <a class="skip" href="#main">Skip to content</a>
 
-	<!-- The Modal Info -->
-			<div id="info" class="modal">
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <div class="nav-inner glass">
+      <a class="brand" href="#top" aria-label="SurgiSim home">
+        <img src="SurgiSim%20logo.png" alt="SurgiSim" width="200" height="79">
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span class="sr">Menu</span>
+      </button>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#team">Team</a>
+        <a href="#institutions">Institutions</a>
+      </nav>
+    </div>
+  </header>
 
-			  <!-- Modal content -->
-			  <div class="modal-content">
-			    <span class="close">&times;</span>
-			    <h3 style="font-weight: 1000; color: #4c4c4c;">System requirements</h3>
+  <main id="main">
 
-			    <p><b>Recommended</b></p>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <figure class="hero-media">
+        <img src="images/hero-utouch-clean.jpg?v=2" alt="A surgeon uses a haptic stylus to dissect patient anatomy shown on a spatial reality display" width="1672" height="941" fetchpriority="high">
+      </figure>
+      <div class="wrap">
+        <div class="hero-copy">
+          <h1>Enabling surgeons to perform the best surgery.</h1>
+          <p class="lead">Patient-specific surgical simulation for Otolaryngology – Head &amp; Neck Surgery, from the University of Calgary's Ohlson Research Initiative.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#features">Explore features</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-			    <p>
-			    Requires a 64-bit processor and operating system
-			    <br>
-			    OS: Windows 10 (64-Bit versions)
-			    <br>
-			    Processor: intel(r) Core™ i7 6700k or better
-			    <br>
-				RAM: 16GB
-				<br>
-				GPU: NVIDIA GeForce RTX 3070
-				<br>
-				Displays: Oculus Rift S or Oculus Quest 2
-				<br>
-				Haptic device: Geomagic Touch Haptic (20% Education discount available at <a target="_blank" href="https://www.rapid3d.ca"> rapid3d.ca)</a>
-				</p>
+    <!-- ============ MISSION & VISION ============ -->
+    <section class="section mission" id="mission">
+      <div class="wrap">
+        <div class="mv glass">
+          <div class="mv-vision">
+            <h2 class="mv-label">Vision</h2>
+            <p class="mv-statement">Enabling surgeons to perform the best surgery.</p>
+          </div>
+          <div class="mv-divider" aria-hidden="true"></div>
+          <div class="mv-mission">
+            <h2 class="mv-label">Mission</h2>
+            <p>To create a suite of applications that provides high-fidelity, interactive, virtual environments to effectively <strong>teach</strong>, <strong>plan</strong> and <strong>practice</strong> Otolaryngology – Head &amp; Neck Surgery.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-			  </div>
+    <!-- ============ WHAT IS SURGISIM ============ -->
+    <section class="section about" id="about">
+      <div class="wrap about-grid">
+        <div class="about-copy">
+          <h2>What is SurgiSim?</h2>
+          <p class="lead">SurgiSim is a surgical simulation platform for exploring and manipulating patient-specific anatomy derived from clinical imaging. It runs on a desktop computer or a laptop.</p>
+          <p>Skull base surgeons and trainees use it to rehearse complex procedures, such as temporal bone surgery, with high-fidelity 3D visualization on spatial reality displays and realistic haptic feedback.</p>
+          <p>Built on Unreal Engine&nbsp;5, SurgiSim delivers real-time volumetric rendering and interactive virtual dissection. It is developed by the Surgical Innovation group at the Ohlson Research Initiative (University of Calgary), in collaboration with Stanford University and Western University.</p>
+        </div>
 
-			</div>
+        <!-- Platform diagram. When screenshots are ready, a <figure class="about-visual dark screen-panel"><img ...></figure> can replace this. -->
+        <figure class="about-visual dark screen-panel" aria-label="Diagram: patient imaging flows into SurgiSim on Unreal Engine 5, which drives a standard screen, a spatial reality display and a haptic device">
+          <svg class="ill ill-platform" viewBox="0 0 560 420" role="img" aria-hidden="true">
+            <defs>
+              <radialGradient id="pfCore" cx="50%" cy="45%" r="60%">
+                <stop offset="0" stop-color="#00b898" stop-opacity=".45"/>
+                <stop offset="1" stop-color="#00b898" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- connectors -->
+            <path class="pf-line" d="M122 210 H200"/>
+            <path class="pf-line" d="M360 190 C 390 190, 380 90, 404 90"/>
+            <path class="pf-line" d="M360 210 H404"/>
+            <path class="pf-line" d="M360 230 C 390 230, 380 330, 404 330"/>
 
-	<!-- The Modal Download -->
-			<div id="download" class="modal">
+            <!-- input: imaging -->
+            <g transform="translate(66 210)">
+              <g class="pf-scan">
+                <rect x="-44" y="-50" width="88" height="88" rx="10" class="pf-box"/>
+                <rect x="-38" y="-44" width="76" height="76" rx="6" fill="url(#pfCt)"/>
+                <ellipse cx="0" cy="-6" rx="24" ry="30" class="pf-skull"/>
+                <ellipse cx="0" cy="-6" rx="17" ry="23" class="pf-brain"/>
+                <path d="M-16 0 a2 2 0 1 1 4 0 a4 4 0 1 1 -8 0 a6 6 0 1 1 12 0" class="pf-coch"/>
+                <path d="M16 0 a2 2 0 1 0 -4 0 a4 4 0 1 0 8 0 a6 6 0 1 0 -12 0" class="pf-coch"/>
+              </g>
+              <text y="68" text-anchor="middle">Patient CT</text>
+            </g>
+            <linearGradient id="pfCt" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#3b4a4e"/><stop offset="1" stop-color="#172327"/>
+            </linearGradient>
 
-			  <!-- Modal content -->
-			  <div style="text-align: center; display: block;" class="modal-content">
-			    <span class="close2">&times;</span>
-			    <h3 style="font-weight: 1000; color: #4c4c4c;">Download SurgiSim Installer</h3>
+            <!-- core -->
+            <circle cx="280" cy="210" r="120" fill="url(#pfCore)"/>
+            <g transform="translate(280 210)">
+              <rect x="-80" y="-80" width="160" height="160" rx="26" class="pf-core"/>
+              <g class="pf-cube">
+                <g transform="translate(0 -12)">
+                  <polygon points="0,-38 34,-19 0,0 -34,-19" class="cube-top"/>
+                  <polygon points="-34,-19 0,0 0,40 -34,21" class="cube-l"/>
+                  <polygon points="34,-19 0,0 0,40 34,21" class="cube-r"/>
+                  <path class="cube-cut" d="M6 -22 q 10 6 4 16 q -8 8 -18 0 q -4 -10 14 -16z"/>
+                  <path class="cube-grid" d="M-34 -9 L0 10 L34 -9 M-34 1 L0 20 L34 1 M-34 11 L0 30 L34 11 M-17 -28 L17 -9 M-17 -10 L17 -28"/>
+                </g>
+              </g>
+              <text y="52" text-anchor="middle" class="t-strong">SurgiSim</text>
+              <text y="68" text-anchor="middle" class="t-sub">Unreal Engine 5</text>
+            </g>
 
-			    	<div style="margin: 0 auto;">
-			    		
-					<form id="form" action="https://formspree.io/f/mqkwdqeq" method="POST">
-						<div >
-							<label style="font-size: 20px;">
-						    Your email:
-						    <input style="font-size: 20px;" type="email" placeholder="me@example.com" name="_replyto" required>
-					  		</label>
-						</div>
-						<br>
-						<br>
-						<div>
-							<a  id="downloadSS"><button type="button" id="bt_download"></button></a>
-						</div>
+            <!-- outputs -->
+            <g transform="translate(404 90)" class="pf-out">
+              <rect x="0" y="-32" width="152" height="64" rx="16" class="pf-box"/>
+              <rect x="14" y="-16" width="34" height="24" rx="3" class="pf-dev"/>
+              <path d="M31 8 v7 M22 16 h18" class="pf-dev-line"/>
+              <text x="58" y="-3" class="t-small">Screen</text>
+              <text x="58" y="12" class="t-sub">Viewer</text>
+            </g>
+            <g transform="translate(404 210)" class="pf-out">
+              <rect x="0" y="-32" width="152" height="64" rx="16" class="pf-box"/>
+              <polygon points="14,14 48,14 44,-16 18,-16" class="pf-dev"/>
+              <path d="M24 -2 q 7 -12 14 0 q -7 8 -14 0z" class="pf-holo"/>
+              <text x="58" y="-3" class="t-small">Spatial</text>
+              <text x="58" y="12" class="t-sub">3D display</text>
+            </g>
+            <g transform="translate(404 330)" class="pf-out">
+              <rect x="0" y="-32" width="152" height="64" rx="16" class="pf-box"/>
+              <path d="M18 16 h26 M31 16 v-8 l6 -14 l-12 -6 l-6 12" class="pf-dev-line"/>
+              <circle cx="19" cy="-12" r="3" class="pf-haptic-tip"/>
+              <text x="58" y="-3" class="t-small">Haptic</text>
+              <text x="58" y="12" class="t-sub">Force feedback</text>
+            </g>
+          </svg>
+        </figure>
+      </div>
+    </section>
 
-					</form>
+    <!-- ============ FEATURES ============ -->
+    <section class="section features" id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Features</h2>
+          <p class="lead">Built around one idea: every case starts from the patient's own anatomy.</p>
+        </div>
 
-			    	</div>
-					
+        <div class="bento">
+          <article class="feat glass">
+            <h3>Patient-specific anatomy</h3>
+            <p>Explore and manipulate 3D anatomy built directly from a patient's clinical imaging studies.</p>
+          </article>
 
-					<script type="text/javascript">
+          <article class="feat glass">
+            <h3>Automatic segmentation</h3>
+            <p>SurgiSim automatically segments clinical imaging and returns a segmented DICOM, ready to build into a surgical scene.</p>
+          </article>
 
-						function validateEmail(elementValue){      
-						   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-						   return emailPattern.test(elementValue); 
-						 } 
+          <article class="feat glass">
+            <h3>Surgical rehearsal &amp; training</h3>
+            <p>Rehearse complex procedures on patient-specific anatomy, with realistic haptics, before entering the OR.</p>
+          </article>
 
+          <article class="feat glass">
+            <h3>Patient education</h3>
+            <p>Help patients understand their proposed procedure by showing them their own anatomy.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-						function checkform(form) {
-					    // get all the inputs within the submitted form
-					    var inputs = form.getElementsByTagName('input');
-					    for (var i = 0; i < inputs.length; i++) {
-					        // only validate the inputs that have the required attribute
-					        if(inputs[i].hasAttribute("required")){
-					            if(inputs[i].value == ""){
-					                // found an empty field that is required
-					                alert("Please enter your email address");
-					                return false;
-					            }else{
-					            	if (i==0) {
+    <!-- ============ HARDWARE ============ -->
+    <section class="section hardware" id="hardware" data-anim>
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Hardware options</h2>
+          <p class="lead">SurgiSim scales to the equipment you have. Switch devices on and off to see what each setup adds.</p>
+        </div>
 
-					            		if(validateEmail(inputs[i].value) == false){
+        <div class="hw glass has-srd has-hap" id="hw">
+          <div class="hw-scene dark">
+            <svg class="ill ill-hw" viewBox="0 0 800 400" role="img" aria-labelledby="hwOutTitle">
+              <defs>
+                <linearGradient id="deskG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity=".10"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+                <radialGradient id="holoG" cx="50%" cy="50%" r="50%">
+                  <stop offset="0" stop-color="#4be3c6" stop-opacity=".35"/><stop offset="1" stop-color="#4be3c6" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <polygon points="20,330 780,330 740,372 60,372" fill="url(#deskG)"/>
+              <path d="M20 330 H780" class="desk-edge"/>
 
-					            			alert("Invalid email!");
-					            			return false;
-					            		}
-					            	}
-					            }
-					        }
-					    }
-					    return true;
-					}
-					
-						var downloadSS = document.getElementById('downloadSS');
-						var form = document.getElementById('form');
-						downloadSS.onclick = function() {
-							
-							 if (checkform(form) == false){
-							 }else{
-							 	
-							 	window.open("https://www.dropbox.com/s/dvdfxrifqh9hdyz/SurgiSim_Win64_2021-07-13.exe?dl=0", "_blank");
-							 	document.getElementById("form").submit();
-							 }
-						}
+              <!-- cables -->
+              <path class="cable cable-srd" d="M396 328 C 440 346, 500 344, 540 326"/>
+              <path class="cable cable-hap" d="M404 330 C 470 366, 620 366, 690 330"/>
 
-					</script>
+              <!-- Computer: a laptop showing the anatomy -->
+              <g class="dev dev-pc">
+                <rect x="82" y="96" width="296" height="206" rx="12" class="dev-body"/>
+                <circle cx="230" cy="104" r="2.5" class="screen-ui-line"/>
+                <rect x="94" y="112" width="272" height="178" rx="5" class="screen"/>
+                <rect x="102" y="122" width="50" height="158" rx="4" class="screen-ui"/>
+                <path d="M110 136 h32 M110 148 h26 M110 160 h30 M110 172 h22" class="screen-ui-line"/>
+                <g transform="translate(262 204) scale(.74)">
+                  <g class="orbit-spin"><ellipse rx="92" ry="30" class="orbit"/></g>
+                  <g class="laby small">
+                    <ellipse rx="22" ry="16" class="lb-vest"/>
+                    <path d="M-6 -12 C -20 -70, 50 -76, 34 -14" class="lb-canal"/>
+                    <path d="M14 -6 C 60 -30, 84 28, 22 12" class="lb-canal"/>
+                    <path transform="translate(-52 18)" d="M0 0 a5 5 0 1 1 10 0 a10 10 0 1 1 -20 0 a15 15 0 1 1 30 0 a20 20 0 1 1 -40 0" class="lb-coch"/>
+                    <path d="M-30 -30 C -40 -10, -44 10, -64 40" class="lb-nerve"/>
+                  </g>
+                </g>
+                <polygon points="82,304 378,304 408,324 52,324" class="dev-body"/>
+                <path d="M100 310 H360 M86 317 H374" class="dev-vent"/>
+                <rect x="52" y="324" width="356" height="6" rx="3" class="dev-body"/>
+                <text x="230" y="360" text-anchor="middle" class="t-sub">Computer</text>
+              </g>
 
-			  </div>
+              <!-- Spatial reality display -->
+              <g class="slot slot-srd"><rect x="462" y="160" width="150" height="170" rx="16"/><text x="537" y="252" text-anchor="middle">+</text></g>
+              <g class="dev dev-srd">
+                <ellipse cx="537" cy="186" rx="80" ry="64" fill="url(#holoG)" class="holo-glow"/>
+                <polygon points="466,328 608,328 592,196 482,196" class="dev-body"/>
+                <polygon points="478,318 596,318 584,206 490,206" class="screen"/>
+                <path d="M490 206 L537 150 L584 206" class="holo-ray"/>
+                <g class="holo">
+                  <g transform="translate(537 214) scale(.7)">
+                    <g class="laby">
+                      <ellipse rx="22" ry="16" class="lb-vest"/>
+                      <path d="M-6 -12 C -20 -70, 50 -76, 34 -14" class="lb-canal"/>
+                      <path d="M14 -6 C 60 -30, 84 28, 22 12" class="lb-canal"/>
+                      <path d="M4 12 C 20 60, 70 50, 50 10" class="lb-canal c3"/>
+                      <path transform="translate(-52 18)" d="M0 0 a5 5 0 1 1 10 0 a10 10 0 1 1 -20 0 a15 15 0 1 1 30 0 a20 20 0 1 1 -40 0" class="lb-coch"/>
+                      <path d="M-30 -30 C -40 -10, -44 10, -64 40" class="lb-nerve"/>
+                    </g>
+                  </g>
+                </g>
+                <text x="537" y="360" text-anchor="middle" class="t-sub">Spatial reality display</text>
+              </g>
 
-			</div>
-	  	</div>
+              <!-- Haptic device -->
+              <g class="slot slot-hap"><rect x="642" y="160" width="130" height="170" rx="16"/><text x="707" y="252" text-anchor="middle">+</text></g>
+              <g class="dev dev-hap">
+                <rect x="656" y="300" width="100" height="30" rx="12" class="dev-body"/>
+                <circle cx="706" cy="298" r="18" class="dev-body"/>
+                <g class="hap-arm">
+                  <path d="M706 290 L730 214" class="arm"/>
+                  <circle cx="730" cy="214" r="7" class="joint"/>
+                  <g class="hap-stylus">
+                    <path d="M730 214 L682 186" class="arm"/>
+                    <circle cx="682" cy="186" r="6" class="joint"/>
+                    <path d="M682 186 L660 248" class="stylus"/>
+                    <circle cx="660" cy="250" r="4" class="stylus-tip"/>
+                    <circle cx="660" cy="250" r="10" class="stylus-ripple"/>
+                  </g>
+                </g>
+                <text x="706" y="360" text-anchor="middle" class="t-sub">Haptic device</text>
+              </g>
+            </svg>
+          </div>
 
-  	<div id="footer">
-  		
-  		<h4>Copyright © 2021 | The University of Calgary | Stanford University | Western University</h4>
+          <div class="hw-controls">
+            <div class="hw-switches">
+              <div class="switch-row">
+                <span class="switch-label"><strong>Computer</strong></span>
+                <span class="switch is-locked" aria-hidden="true"><i></i></span>
+              </div>
+              <div class="switch-row">
+                <label class="switch-label" id="lblSrd" for="swSrd"><strong>Spatial reality display</strong><span>Glasses-free 3D visualization</span></label>
+                <button class="switch" id="swSrd" role="switch" aria-checked="true" data-device="srd" aria-labelledby="lblSrd"><i></i></button>
+              </div>
+              <div class="switch-row">
+                <label class="switch-label" id="lblHap" for="swHap"><strong>Haptic device</strong><span>Tactile, force-feedback dissection</span></label>
+                <button class="switch" id="swHap" role="switch" aria-checked="true" data-device="haptic" aria-labelledby="lblHap"><i></i></button>
+              </div>
+            </div>
 
-  	</div>
+            <div class="hw-out" aria-live="polite">
+              <span class="hw-out-meter" aria-hidden="true"><i></i><i></i><i></i></span>
+              <h3 id="hwOutTitle">Full surgical simulation experience</h3>
+              <p id="hwOutText">3D visualization and tactile dissection together, on the patient's own anatomy.</p>
+            </div>
+          </div>
 
-<script>
-	var info = document.getElementById("info");
-	var btn = document.getElementById("bt_info");
-	var span = document.getElementsByClassName("close")[0];
-	btn.onclick = function() {
-	  info.style.display = "block";
-	}
-	span.onclick = function() {
-	  info.style.display = "none";
-	}
-	window.onclick = function(event) {
-	  if (event.target == info) {
-	    info.style.display = "none";
-	  }
-	}
-</script>
+          <table class="hw-table">
+            <caption class="sr">Hardware setups and the experience each provides</caption>
+            <thead><tr><th scope="col">Setup</th><th scope="col">Experience</th></tr></thead>
+            <tbody>
+              <tr data-tier="0"><td>Computer only</td><td>Specimen viewer: explore and inspect anatomy</td></tr>
+              <tr data-tier="1"><td>Computer + spatial reality display <em>or</em> haptic device</td><td>Adds 3D visualization or tactile dissection</td></tr>
+              <tr data-tier="2"><td>Computer + spatial reality display + haptic device</td><td>Full surgical simulation experience</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
-<script>
-	var download = document.getElementById("download");
-	var btn = document.getElementById("bt_download");
-	var span2 = document.getElementsByClassName("close2")[0];
-	btn.onclick = function() {
-	  download.style.display = "block";
-	}
-	span2.onclick = function() {
-	  download.style.display = "none";
-	}
-	window.onclick = function(event) {
-	  if (event.target == info) {
-	    download.style.display = "none";
-	  }
-	}
-</script>
+    <!-- ============ TEAM ============ -->
+    <section class="section team" id="team">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Our team</h2>
+          <p class="lead">Surgeons, engineers and researchers building the next generation of surgical simulation.</p>
+        </div>
 
-  </body>
+        <div class="leads">
+          <article class="person glass">
+            <div class="portrait"><img src="collaborators/joseph.jpg" alt="Dr. Joseph C. Dort" width="260" height="320" loading="lazy"></div>
+            <div class="person-body">
+              <h3>Dr. Joseph C. Dort</h3>
+              <p class="role">Emeritus Professor, Cumming School of Medicine</p>
+              <p>Dr. Dort is an Otolaryngologist – Head &amp; Neck Surgeon and Emeritus Professor at the University of Calgary's Cumming School of Medicine. A former family physician, he completed Otolaryngology residency at the University of Manitoba, a skull base surgery fellowship at the University of Zurich, and an MSc in epidemiology at the Harvard School of Public Health.</p>
+              <p>He was the founding Executive Director of the Ohlson Research Initiative and Senior Medical Director of the Alberta Cancer Strategic Clinical Network. Dr. Dort has led numerous healthcare quality improvement initiatives across Alberta.</p>
+            </div>
+          </article>
+
+          <article class="person glass">
+            <div class="portrait"><img src="collaborators/justin.webp" alt="Dr. Justin Lui" width="400" height="400" loading="lazy"></div>
+            <div class="person-body">
+              <h3>Dr. Justin Lui</h3>
+              <p class="role">Director of Surgical Innovation</p>
+              <p>Dr. Lui is an Otologist/Neurotologist in the Department of Surgery at the University of Calgary's Cumming School of Medicine. After completing his Otolaryngology – Head &amp; Neck Surgery residency in Calgary, he pursued an Otology–Skull Base fellowship at Sunnybrook Health Sciences Centre in Toronto.</p>
+              <p>Alongside his clinical work, he leads a multidisciplinary research group developing simulation tools for surgical education and planning. His work has helped establish the University of Calgary as a national leader in surgical simulation training, with research partners at Western University and Stanford University.</p>
+            </div>
+          </article>
+        </div>
+
+        <ul class="collabs">
+          <li class="collab glass"><div class="avatar"><img src="collaborators/lee.jpg" alt="" width="400" height="400" loading="lazy"></div><span>Lee Ringham<small>MSc</small></span></li>
+          <li class="collab glass"><div class="avatar"><img src="collaborators/fanrui.jpg" alt="" width="400" height="400" loading="lazy"></div><span>Fanrui Fu<small>Ph.D.</small></span></li>
+          <li class="collab glass"><div class="avatar"><img src="collaborators/amir.jpg" alt="" width="400" height="400" loading="lazy"></div><span>Amirhossein Mirtabatabaeipour<small>MSc</small></span></li>
+          <li class="collab glass"><div class="avatar"><img src="collaborators/arthur.webp" alt="" width="400" height="400" loading="lazy"></div><span>Arthur Volpato<small>MSc</small></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ INSTITUTIONS ============ -->
+    <section class="section partners" id="institutions">
+      <div class="wrap">
+        <ul class="partner-grid" aria-label="Institutions involved in SurgiSim">
+          <li class="partner"><img src="partners/ori.png" alt="Ohlson Research Initiative" width="900" height="175" loading="lazy"></li>
+          <li class="partner"><img src="partners/ucalgary.png" alt="University of Calgary" width="900" height="251" loading="lazy" class="logo-tall"></li>
+          <li class="partner"><img src="partners/stanford.png" alt="Stanford University" width="784" height="257" loading="lazy"></li>
+          <li class="partner"><img src="partners/western.svg" alt="Western University" width="272" height="65" loading="lazy"></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <img src="SurgiSim%20logo.png" alt="SurgiSim" width="140" height="55" loading="lazy">
+      <p>Patient-specific surgical simulation from the Ohlson Research Initiative, University of Calgary.</p>
+      <p class="copy">© <span id="year">2026</span> SurgiSim</p>
+    </div>
+  </footer>
+
+  <script src="app.js?v=25"></script>
+</body>
 </html>

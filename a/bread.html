@@ -188,6 +188,7 @@
             let amtStr = amt;
             let foundFraction = false;
 
+            // Check for common fractional equivalents first
             Object.keys(fractionMap).forEach(key => {
                 if (Math.abs(decimal - parseFloat(key)) < 0.01 && !foundFraction) {
                     amtStr = whole > 0 ? `${whole} ${fractionMap[key]}` : fractionMap[key];
@@ -195,11 +196,20 @@
                 }
             });
             
-            if (!foundFraction && whole > 0 && decimal > 0) {
-                 amtStr = `${whole} ${decimal.toFixed(2).substring(1)}`;
-            } else if (!foundFraction) {
-                amtStr = amt.toFixed(2).replace(/\.00$/, ''); // Clean up trailing zeros if exact integer
+            // If it's a whole number, display it as a clean integer
+            if (amt === whole) {
+                 amtStr = whole.toString();
+                 foundFraction = true;
             }
+            
+            // If it's a mix of whole and decimal, or an uncommon decimal, format cleanly
+            if (!foundFraction) {
+                // If the number is simple (like 1.125), show it directly, otherwise truncate
+                if (amt % 1 !== 0) {
+                     amtStr = amt.toFixed(3).replace(/(\.0+|0+)$/, ''); // Clean up trailing zeros
+                }
+            }
+
 
             return `${amtStr} ${unit}`;
         };
@@ -331,8 +341,13 @@
             cardElement.className = "bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6";
             
             // Get state for this specific card
-            let cardState = JSON.parse(localStorage.getItem(cardId)) || { selectedSize: Object.keys(recipe.sizes)[0], useMetric: true };
-            
+            // Ensure selectedSize defaults to the first available size if the one in storage is invalid
+            const defaultSize = Object.keys(recipe.sizes)[0];
+            let cardState = JSON.parse(localStorage.getItem(cardId)) || { selectedSize: defaultSize, useMetric: true };
+            if (!recipe.sizes[cardState.selectedSize]) {
+                 cardState.selectedSize = defaultSize;
+            }
+
             const availableSizes = Object.keys(recipe.sizes);
             const currentIngredients = recipe.sizes[cardState.selectedSize] || [];
 
@@ -416,7 +431,7 @@
             const filteredRecipes = recipes.filter(r => {
                 const matchesCategory = selectedCategory === "All" || r.category === selectedCategory;
                 const matchesSearch = r.title.toLowerCase().includes(searchTerm.toLowerCase());
-                return matchesCategory && matchesSearch;
+                return matchesCategory && searchTerm === '' || r.title.toLowerCase().includes(searchTerm.toLowerCase());
             });
             
             // Clear existing list
@@ -424,7 +439,11 @@
 
             if (filteredRecipes.length > 0) {
                 filteredRecipes.forEach(recipe => {
-                    listElement.appendChild(renderRecipeCard(recipe));
+                    // Use a temporary container if the element doesn't exist yet
+                    const tempDiv = document.createElement('div');
+                    tempDiv.appendChild(renderRecipeCard(recipe));
+                    // Append the actual rendered element
+                    listElement.appendChild(tempDiv.firstChild);
                 });
             } else {
                 listElement.innerHTML = `
@@ -459,13 +478,16 @@
 
         window.handleMetricToggle = (recipeId, useMetric) => {
             const cardId = `recipe-${recipeId}`;
-            let cardState = JSON.parse(localStorage.getItem(cardId)) || { selectedSize: Object.keys(recipes.find(r => r.id === recipeId).sizes)[0], useMetric: true };
+            // Find recipe to get its default size
+            const recipe = recipes.find(r => r.id === recipeId);
+            const defaultSize = Object.keys(recipe.sizes)[0];
+
+            let cardState = JSON.parse(localStorage.getItem(cardId)) || { selectedSize: defaultSize, useMetric: true };
             
             cardState.useMetric = useMetric;
             localStorage.setItem(cardId, JSON.stringify(cardState));
             
             // Re-render only the affected card
-            const recipe = recipes.find(r => r.id === recipeId);
             const listElement = document.getElementById('recipe-list');
             const oldCard = document.getElementById(cardId);
             if (oldCard) {
