@@ -38,13 +38,13 @@
   --wrap: 1200px;
 }
 
-/* Qanelas Soft ExtraBold for buttons. Only the demo version is available, which is not licensed
-   for web embedding, so it is picked up from installed fonts. Add a licensed webfont file here
-   (e.g. url("fonts/QanelasSoft-ExtraBold.woff2")) to show it to every visitor. */
+/* Qanelas Soft ExtraBold for buttons. The hosted woff2 is converted from the DEMO version,
+   which is not licensed for web embedding; replace it with a licensed webfont when available. */
 @font-face {
   font-family: "Qanelas Soft";
   src: local("Qanelas Soft ExtraBold"), local("QanelasSoft-ExtraBold"),
-       local("Qanelas Soft DEMO ExtraBold"), local("QanelasSoftDEMO-ExtraBold");
+       local("Qanelas Soft DEMO ExtraBold"), local("QanelasSoftDEMO-ExtraBold"),
+       url("fonts/QanelasSoft-ExtraBold.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
