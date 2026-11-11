@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="otovis-section.css">
 </head>
 <body>
 
@@ -370,6 +371,62 @@
         </ul>
       </div>
     </section>
+
+    <!-- ============ OTOVIS (keep after the Institutions logos) ============ -->
+    <section class="ovs" id="otovis" aria-labelledby="ovs-title" data-ovs>
+      <div class="ovs-film">
+        <video class="ovs-video" muted playsinline loop preload="metadata"
+               aria-label="Short animations of 3D anatomy from OtoVIS: an endoscopic view of the middle ear, the ear and ossicles, BONE BRIDGE 602 implant placement, and the branches of the facial nerve.">
+          <source src="assets/otovis/otovis-film-1080.webm" type="video/webm">
+          <source src="assets/otovis/otovis-film-1080.mp4" type="video/mp4">
+        </video>
+        <img class="ovs-still" alt="" hidden>
+        <div class="ovs-scrim" aria-hidden="true"></div>
+        <div class="ovs-labels" aria-hidden="true"></div>
+        <div class="ovs-shotcap" aria-hidden="true"></div>
+      </div>
+
+      <div class="ovs-content">
+        <header class="ovs-head">
+          <h2 class="ovs-title" id="ovs-title">Also from the Ohlson Research Initiative</h2>
+          <a class="ovs-logo" href="https://otovis.ca" target="_blank" rel="noopener">
+            <img src="assets/otovis/otovis-logo-white.webp" width="1200" height="261" alt="OtoVIS" loading="lazy">
+          </a>
+        </header>
+
+        <div class="ovs-chapters">
+          <div class="ovs-chapter is-active" data-chapter="0">
+            <h3 class="ovs-headline">Learn the ear in&nbsp;3D.</h3>
+            <p class="ovs-body">High-yield otology for medical students and family physicians: interactive anatomy, pathology and exam skills.</p>
+          </div>
+          <div class="ovs-chapter" data-chapter="1">
+            <h3 class="ovs-headline">Otologic surgery, step by step, in&nbsp;3D.</h3>
+            <p class="ovs-body">Guided procedures and hearing implants on interactive models, for trainees and surgeons.</p>
+          </div>
+          <div class="ovs-chapter" data-chapter="2">
+            <h3 class="ovs-headline">Skull base anatomy in your&nbsp;hands.</h3>
+            <p class="ovs-body">The facial nerve and pterygopalatine fossa in 3D, with radiology and surgical approaches.</p>
+          </div>
+        </div>
+
+        <div class="ovs-action">
+          <a class="ovs-cta" href="https://otovis.ca" target="_blank" rel="noopener">Visit OtoVIS</a>
+          <p class="ovs-runs">Runs in any modern browser, on a computer, tablet or phone.</p>
+        </div>
+
+        <div class="ovs-nav">
+          <ul class="ovs-tabs" aria-label="OtoVIS apps">
+            <li><button type="button" class="ovs-tab" data-goto="0" aria-current="true"><span class="ovs-rail"><i></i></span>Education</button></li>
+            <li><button type="button" class="ovs-tab" data-goto="1"><span class="ovs-rail"><i></i></span>Clinical</button></li>
+            <li><button type="button" class="ovs-tab" data-goto="2"><span class="ovs-rail"><i></i></span>Skull Base</button></li>
+          </ul>
+          <button type="button" class="ovs-toggle" aria-label="Pause animation" data-state="playing">
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path class="ovs-icon-pause" d="M4 2.5h3v11H4zM9 2.5h3v11H9z"/><path class="ovs-icon-play" d="M4.5 2.2 13 8l-8.5 5.8z"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -381,5 +438,6 @@
   </footer>
 
   <script src="app.js?v=26"></script>
+  <script src="otovis-section.js" defer></script>
 </body>
 </html>
